@@ -1,0 +1,277 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript: return false;" (click)="telaPrincipal()">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        Dashboard
+      </li>
+    </ol>
+
+    <div class="row" 
+         *ngIf="mensagemAvalPendentes != undefined || mensagemConvPendentes != undefined">
+      <div class="col-6"
+           *ngIf="mensagemAvalPendentes != undefined">
+        <div class="alert alert-warning alert-dismissible fade-show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <a (click)="telaPesquisaAvaliacoes()" href="javascript: return false;">
+            {{mensagemAvalPendentes.texto}}
+          </a>
+        </div>
+      </div>
+      <div class="col-6"
+           *ngIf="mensagemConvPendentes != undefined">
+        <div class="alert alert-warning alert-dismissible fade-show" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <a (click)="telaMeusConvites()" href="javascript: return false;">
+            {{mensagemConvPendentes.texto}}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        
+        <!-- conteúdo da página -->
+        <!--
+        <div *ngIf="isLogado()">
+          <a (click)="telaPesquisaUsuario()">Pesquisar usuários</a><br />
+          <a (click)="telaListaAmigos()">Meus amigos</a><br />
+          <a (click)="telaCadastroUsuario()">Dados cadastrais</a><br />
+          <a (click)="telaMeusConvites()">Meus convites</a><br />
+          <a (click)="telaCadastroJogos()">Últimos jogos</a><br />
+          <a (click)="telaCadastroAvaliacoes()">Cadastrar avaliações</a><br />
+          <a (click)="telaPesquisaAvaliacoes()">Avaliações pendentes</a><br />
+          <a href="#">Estatísticas</a><br />
+          <a href="#">Configurações</a><br />
+          <a (click)="telaPrincipal()">Principal</a><br />
+        </div>
+        <p>
+          Usuario Logado (UsuarioService): {{this.logado1}}<br />
+          Usuario Logado (LoginService): {{this.logado2}}<br />
+          Usuario: {{this.usuario.nome}}
+        </p>
+        <p>==================================================</p>
+        Gráfico: 
+        -->
+        <div class="row">
+          <div class="col-2">
+              <div class="card border-info">
+                <div class="card-header text-center">Avaliações aceitas</div>
+                <div class="card-body text-center bg-info"><h3>{{qtdAvaliacoesAceitas}}</h3></div>
+              </div>
+          </div>
+          <div class="col-2">
+            <div class="card border-warning">
+              <div class="card-header text-center">Avaliações recusadas</div>
+              <div class="card-body text-center bg-warning"><h3>{{qtdAvaliacoesRecusadas}}</h3></div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="card border-info">
+              <div class="card-header text-center">Convites receb. aceitos</div>
+              <div class="card-body text-center bg-info"><h3>{{qtdConvitesRecebidosAceitos}}</h3></div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="card border-warning">
+              <div class="card-header text-center">Convites receb. recusados</div>
+              <div class="card-body text-center bg-warning"><h3>{{qtdConvitesRecebidosRecusados}}</h3></div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="card border-info">
+              <div class="card-header text-center">Convites enviados</div>
+              <div class="card-body text-center bg-info"><h3>{{qtdConvitesEnviados}}</h3></div>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="card border-info">
+              <div class="card-header text-center">Jogos realizados</div>
+              <div class="card-body text-center bg-info"><h3>{{qtdJogosRealizados}}</h3></div>
+            </div>
+          </div>
+        </div>
+        <p></p>
+        <div class="row">
+          <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                  <h5>Vitórias e Derrotas</h5>
+                  <h6 style="color: #AAAAAA;">Veja sua performance através dos resultados finais.<br />&nbsp;</h6>
+                <div id="pie_chart_vd"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <h5>Tiebreak</h5>
+                <h6 style="color: #AAAAAA;">Indicativos reais de tiebreaks podem fazer você melhorar seus resultados através de análises.</h6>
+                <div id="pie_chart_tie"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card">
+              <div class="card-body">
+                <h5>Últimos jogos</h5>
+                <h6 style="color: #AAAAAA;">
+                  Confira os seus últimos jogos e veja sua melhor sequência.<br />
+                  Veja a sequência da esquerda para a direita.
+                </h6>
+                <!-- {{this.ultimosJogos}} -->
+                <table style="height: 130px; border: 1px; border-color: #fff;">
+                  <tr>
+                    <td style="width: 60px;" *ngIf="ultimosJogos.length >= 1">
+                      <img *ngIf="resultadoUltimosJogos(0)" src="../../../../assets/images/vitoria.png" width="50px" height="47px" />
+                      <img *ngIf="!resultadoUltimosJogos(0)" src="../../../../assets/images/derrota.png" width="50px" height="47px" />
+                    </td>
+                    <td style="width: 60px;" *ngIf="ultimosJogos.length >= 2">
+                      <img *ngIf="resultadoUltimosJogos(1)" src="../../../../assets/images/vitoria.png" width="50px" height="47px" />
+                      <img *ngIf="!resultadoUltimosJogos(1)" src="../../../../assets/images/derrota.png" width="50px" height="47px" />
+                    </td>
+                    <td style="width: 60px;" *ngIf="ultimosJogos.length >= 3">
+                      <img *ngIf="resultadoUltimosJogos(2)" src="../../../../assets/images/vitoria.png" width="50px" height="47px" />
+                      <img *ngIf="!resultadoUltimosJogos(2)" src="../../../../assets/images/derrota.png" width="50px" height="47px" />
+                    </td>
+                    <td style="width: 60px;" *ngIf="ultimosJogos.length >= 4">
+                      <img *ngIf="resultadoUltimosJogos(3)" src="../../../../assets/images/vitoria.png" width="50px" height="47px" />
+                      <img *ngIf="!resultadoUltimosJogos(3)" src="../../../../assets/images/derrota.png" width="50px" height="47px" />
+                    </td>
+                    <td style="width: 60px;" *ngIf="ultimosJogos.length >= 5">
+                      <img *ngIf="resultadoUltimosJogos(4)" src="../../../../assets/images/vitoria.png" width="50px" height="47px" />
+                      <img *ngIf="!resultadoUltimosJogos(4)" src="../../../../assets/images/derrota.png" width="50px" height="47px" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="text-center">Último Jogo</td>
+                    <td colspan="4"><i class="fa fa-reply"></i></td>
+                  </tr>
+                </table>       
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row" *ngIf="verEstatisticas">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header"><!-- style="background-color: #7791BD"-->
+                    Estatísticas Técnicas
+                  </div>
+                  <div class="card-body">
+                    <table>
+                      <tr>
+                        <td><div id="pie_chart_saque"></div></td>
+                        <td><div id="pie_chart_forehand"></div></td>
+                        <td><div id="pie_chart_backhand"></div></td>
+                      </tr>
+                      <tr>
+                        <td><div id="pie_chart_voleio"></div></td>
+                        <td><div id="pie_chart_smash"></div></td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="card-footer bg-light">
+                    <table class="col-12">
+                      <tr>
+                        <td><a (click)="exibirGraficosTecnicos('pizza')" href="javascript: return false;">Pizza</a></td>
+                        <td><a (click)="exibirGraficosTecnicos('barra')" href="javascript: return false;">Barra</a></td>
+                        <td><a (click)="exibirGraficosTecnicos('coluna')" href="javascript: return false;">Coluna</a></td>
+                        <td><a (click)="exibirGraficosTecnicos('linha')" href="javascript: return false;">Linha</a></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-12">
+                <div class="card">
+                  <div class="card-header"><!-- style="background-color: #6E85AD"-->
+                    Estatísticas Táticas
+                  </div>
+                  <div class="card-body">
+                    <table>
+                      <tr>
+                        <td><div id="pie_chart_ofensivo"></div></td>
+                        <td><div id="pie_chart_defensivo"></div></td>
+                        <td><div id="pie_chart_tatico"></div></td>
+                      </tr>
+                      <tr>
+                        <td><div id="pie_chart_competitivo"></div></td>
+                        <td><div id="pie_chart_preparo"></div></td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="card-footer bg-light">
+                    <table class="col-12">
+                      <tr>
+                        <td><a (click)="exibirGraficosTaticos('pizza')" href="javascript: return false;">Pizza</a></td>
+                        <td><a (click)="exibirGraficosTaticos('barra')" href="javascript: return false;">Barra</a></td>
+                        <td><a (click)="exibirGraficosTaticos('coluna')" href="javascript: return false;">Coluna</a></td>
+                        <td><a (click)="exibirGraficosTaticos('linha')" href="javascript: return false;">Linha</a></td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="!verEstatisticas">
+          <div class="col-12">
+              <div class="card">
+                <div class="card-body bg-warning">
+                  <h5>{{mensagemErro}}</h5>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <!--
+        <p>
+          Estatística de vitórias e derrotas: {{this.eVitoriaDerrota.valor1}} - {{this.eVitoriaDerrota.valor2}} <br />
+          Estatística de tiebreaks: {{this.eTiebreaks.valor1}} - {{this.eTiebreaks.valor2}} 
+        </p>
+        <p>
+          Estatística de SAQUE: {{this.eSaque.valor1}} - {{this.eSaque.valor2}} - {{this.eSaque.valor3}} - {{this.eSaque.valor4}} <br />
+          Estatística de FOREHAND: {{this.eForehand.valor1}} - {{this.eForehand.valor2}} - {{this.eForehand.valor3}} - {{this.eForehand.valor4}} <br />
+          Estatística de BACKHAND: {{this.eBackhand.valor1}} - {{this.eBackhand.valor2}} - {{this.eBackhand.valor3}} - {{this.eBackhand.valor4}} <br />
+          Estatística de VOLEIO: {{this.eVoleio.valor1}} - {{this.eVoleio.valor2}} - {{this.eVoleio.valor3}} - {{this.eVoleio.valor4}} <br />
+          Estatística de SMASH: {{this.eSmash.valor1}} - {{this.eSmash.valor2}} - {{this.eSmash.valor3}} - {{this.eSmash.valor4}} <br />
+          Estatística de OFENSIVO: {{this.eOfensivo.valor1}} - {{this.eOfensivo.valor2}} - {{this.eOfensivo.valor3}} - {{this.eOfensivo.valor4}} <br />
+          Estatística de DEFENSIVO: {{this.eDefensivo.valor1}} - {{this.eDefensivo.valor2}} - {{this.eDefensivo.valor3}} - {{this.eDefensivo.valor4}} <br />
+          Estatística de TATICO: {{this.eTatico.valor1}} - {{this.eTatico.valor2}} - {{this.eTatico.valor3}} - {{this.eTatico.valor4}} <br />
+          Estatística de COMPETITIVO: {{this.eCompetitivo.valor1}} - {{this.eCompetitivo.valor2}} - {{this.eCompetitivo.valor3}} - {{this.eCompetitivo.valor4}} <br />
+          Estatística de PREPARO FÍSICO: {{this.ePreparo.valor1}} - {{this.ePreparo.valor2}} - {{this.ePreparo.valor3}} - {{this.ePreparo.valor4}}
+        </p>
+        -->
+        <p>.</p>
+        <p>.</p>
+        <!-- fim do conteúdo -->
+
+      </div>
+    </div>
+  </div>
+  <footer class="sticky-footer">
+    <div class="container">
+      <div class="text-center">
+        <small>Copyright TopSpin 2019</small>
+      </div>
+    </div>
+  </footer>
+</div>

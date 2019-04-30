@@ -1,0 +1,76 @@
+<div class="content-wrapper">
+    <div class="container-fluid">
+  
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="javascript: return false;">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            Minhas Avaliações
+        </li>
+      </ol>
+  
+      <div class="col-12">
+  
+        <!-- conteúdo da página -->
+        <form #formAvaliacoes="ngForm" novalidate>
+  
+          <h4>MINHAS AVALIAÇÕES</h4>
+          
+          <app-mensagens [mensagem]="mensagem"></app-mensagens>
+          
+          <div class="row">
+            <div class="col-12">
+              <hr>
+              <div *ngIf="isListaDeAvaliacoesVazia()">
+                {{mensagemGrid}}
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="!isListaDeAvaliacoesVazia()">
+            <div class="col-12">
+              <h5>Lista de avaliações</h5>
+    
+              <table class="table table-sm">
+                <thead class="thead-light">
+                <tr>
+                  <th>Nome</th>
+                  <th>Data</th>
+                  <th>Ação</th>
+                </tr>
+                </thead>
+                <tr *ngFor="let ava of listaDeAvaliacoes">
+                  <td>{{ava.nomeUsuario}} te avaliou!!!</td>
+                  <td>{{ava.data | date:'dd/MM/yyyy'}}</td>
+                  <td>
+                    <button type="button" (click)="confirmaAvaliacao(ava)" class="btn btn-primary btn-sm" style="width: 150px;">Confirma avaliação</button>
+                    &nbsp;
+                    <button type="button" (click)="recusaAvaliacao(ava)" class="btn btn-warning btn-sm" style="width: 150px;">Recusa avaliação</button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <button 
+                  type="button" 
+                  onclick="window.history.back(-1)"
+                  class="btn btn-secondary btn-sm"
+                  style="width: 150px;">Voltar</button>
+            </div>
+          </div>
+        </form>
+        <!-- fim do conteúdo -->
+  
+      </div>
+    </div>
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright TopSpin 2019</small>
+        </div>
+      </div>
+    </footer>
+  </div>
+  

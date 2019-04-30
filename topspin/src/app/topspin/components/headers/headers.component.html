@@ -1,0 +1,141 @@
+<nav *ngIf="isLogado()" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" [routerLink]="['']">
+        <img src="../../../../assets/images/web_hi_res_512.png" style="width: 40; height: 40px;" />
+        TopSpin
+    </a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTopspin"
+            aria-controls="navbarTopspin" aria-expanded="false" aria-label="Navegação Toggle">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarTopspin" class="collapse navbar-collapse">
+        <ul class="navbar-nav navbar-sidenav" id="linksaccordion">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                <a class="nav-link" [routerLink]="['']">
+                    <i class="fa fa-fw fa-dashboard"></i>&nbsp;
+                    <span class="nav-link-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                <a class="nav-link" data-toggle="collapse" 
+                   href="#mnusuarios" data-parent="#linksaccordion"><!-- tb tinha no class:nav-link-collapse collapse -->
+                    <i class="fa fa-user"></i>&nbsp;
+                    <span class="nav-link-text">Usuarios</span> 
+                </a>
+                <ul class="sidenav-second-level collapse" id="mnusuarios">
+                    <li><a [routerLink]="['/pesqUsuario']">Pesquisa de usuários</a></li>
+                    <li><a [routerLink]="['/cadUsuario']">Dados cadastrais</a></li>
+                </ul>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                <a class="nav-link" [routerLink]="['/listaAmigos']">
+                    <i class="fa fa-users"></i>&nbsp;
+                    <span class="nav-link-text">Meus amigos</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                <a class="nav-link" [routerLink]="['/listaConvites']">
+                    <i class="fa fa-thumbs-up"></i>&nbsp;
+                    <span class="nav-link-text">Convites</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                <a class="nav-link" [routerLink]="['/cadJogo']">
+                    <i class="fa fa-play-circle"></i>&nbsp;
+                    <span class="nav-link-text">Últimos jogos</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                <a class="nav-link" [routerLink]="['/cadAvaliacao', 0]">
+                    <i class="fa fa-star-half-o"></i>&nbsp;
+                    <span class="nav-link-text">Avalie um atleta</span>
+                </a>
+            </li>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right">
+                <a class="nav-link" [routerLink]="['/pesqAvaliacao']">
+                    <i class="fa fa-star"></i>&nbsp;
+                    <span class="nav-link-text">Minhas avaliações</span>
+                </a>
+            </li> 
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" 
+                    href="#mnmais" data-parent="#linksaccordion"><!-- tb tinha no class:nav-link-collapse collapse -->
+                    <i class="fa fa-plus-square"></i>&nbsp;
+                    <span class="nav-link-text">Mais</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="mnmais">
+                    <li><a [routerLink]="['/pesqEstatisticas', 0]" href="javascript: return false;">Estatísticas</a></li>
+                    <li><a href="javascript: return false;">Configurações</a></li>
+                    <li><a [routerLink]="['']">Home</a></li>
+                    <li><a [routerLink]="['/externalRedirect', {externalUrl: 'https://google.com'}]">google.com</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="navbar-nav sidenav-toggler">
+            <li class="nav-item">
+                <a id="sidenavToggler" class="nav-link text-center">
+                    <i class="fa fa-fw fa-angle-left"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown"
+                    href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-fw fa-envelope"></i>
+                    <span class="d-lg-none">
+                        Mensagens
+                        <span class="badge badge-pill badge-warning">12 novas</span>
+                    </span>
+                    <span *ngIf="isAvaliacaoPendente() || isConvitePendente()" class="indicator text-warning d-none d-lg-block">
+                        <i class="fa fa-fw fa-circle"></i>
+                    </span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="messagesDropdown">
+                    <h6 class="dropdown-header">Novas mensagensss</h6>
+                    <div class="dropdown-divider"></div>
+                    <a *ngIf="isAvaliacaoPendente()" [routerLink]="['/pesqAvaliacao']" href="javascript: return false;" class="dropdown-item"><strong>Avaliações pendentes({{qtdAvaliacoesPendentes()}}).</strong></a>
+                    <a *ngIf="!isAvaliacaoPendente()" href="javascript: return false;" class="dropdown-item"><strong>Não há avaliações pendentes.</strong></a>
+                    <a *ngIf="isConvitePendente()" [routerLink]="['/listaConvites']" href="javascript: return false;" class="dropdown-item"><strong>Convites pendentes({{qtdConvitesPendentes()}}).</strong></a>
+                    <a *ngIf="!isConvitePendente()" href="javascript: return false;" class="dropdown-item"><strong>Não há convites pendentes.</strong></a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/cadUsuario']" href="javascript: return false;">
+                    <span style="color: #AAAAAA;">{{this.nome}}&nbsp;&nbsp;&nbsp;</span>
+                </a>
+            </li>     
+            <li class="nav-item">
+                <a class="nav-link" (click)="logout()">
+                    <i class="fa fa-sign-out">Logout</i>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- pesquisar usuários, meus amigos, dados cadastrais -->
+<!-- Meus convites, cadastrar jogos -->
+<!-- pesquisar, cadastrar (avaliacoes) -->
+<!-- estatísticas, configurações e google -->
+
+
+<!-- 
+<div *ngIf="isLogado()">
+    <span>
+        Olá, {{this.nome}} | <a (click)="logout()">Sair</a>
+    </span>
+    <p></p>
+    <a [routerLink]="['/pesqUsuario']">Pesquisar usuários</a> | 
+    <a [routerLink]="['/listaAmigos']">Meus amigos</a> | 
+    <a [routerLink]="['/cadUsuario']">Dados cadastrais</a> | 
+    <a [routerLink]="['/listaConvites']">Meus convites</a> | 
+    <a [routerLink]="['/cadJogo']">Últimos jogos</a> | 
+    <a [routerLink]="['/cadAvaliacao', 0]">Cadastrar avaliações</a> | 
+    <a [routerLink]="['/pesqAvaliacao']" >Avaliações pendentes</a> | 
+    <a href="#">Estatísticas</a> | 
+    <a href="#">Configurações</a> | 
+    <a [routerLink]="['']">Principal</a> | 
+    <a [routerLink]="['/externalRedirect', {externalUrl: 'https://google.com'}]">Google</a>
+    <p>==========================================================================================</p>
+</div>
+-->

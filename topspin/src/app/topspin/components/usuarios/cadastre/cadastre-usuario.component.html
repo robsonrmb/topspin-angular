@@ -1,0 +1,195 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript: return false;">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        Dados cadastrais - Formulário reactive
+      </li>
+    </ol>
+  
+    <div class="col-12"> 
+          
+      <!-- conteúdo da página -->
+      <form [formGroup]="formulario" novalidate>
+
+        <h4>DADOS CADASTRAIS</h4>
+
+        <app-mensagens [mensagem]="mensagem"></app-mensagens>
+
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label for="email">Email (*)</label>
+              <input  formControlName="email" 
+                      disabled="true"
+                      [(ngModel)]="usuario.email"
+                      class="form-control" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label for="nome">Nome (*)</label>
+              <input  formControlName="nome" 
+                      [(ngModel)]="usuario.nome"
+                      class="form-control" 
+                      placeholder="Informe seu nome" />
+            </div>
+          </div>
+          <div class="col-4">  
+            <div class="form-group">
+              <label for="apelido">Apelido</label>
+              <input  formControlName="apelido" 
+                      [(ngModel)]="usuario.apelido"
+                      class="form-control" 
+                      placeholder="Informe seu apelido" />
+            </div>  
+          </div>
+          <div class="col-3">  
+            <div class="form-group">
+              <label for="dataNascimento">Data de nascimento (*)</label>
+              <input  formControlName="dataNascimento"  
+                      [(ngModel)]="usuario.dataNascimentoFormatada"
+                      class="form-control"
+                      (keyup)="formataData()" />
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label for="estado">Estado (*)</label>
+              <select formControlName="estado" 
+                      [(ngModel)]="usuario.estado"
+                      class="form-control">
+                <option *ngFor="let estado of estados" value="{{estado.chave}}">{{estado.valor}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">  
+            <div class="form-group">
+              <label for="cidade">Cidade</label>
+              <input  formControlName="cidade" 
+                      [(ngModel)]="usuario.cidade"
+                      class="form-control" 
+                      placeholder="Informe sua cidade"/>
+            </div>  
+          </div>
+          <div class="col-3">  
+            <div class="form-group">
+              <label for="ondeJoga">Local onde joga</label>
+              <input  formControlName="ondeJoga" 
+                      id="ondeJoga" 
+                      [(ngModel)]="usuario.ondeJoga"
+                      class="form-control" />
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2">  
+            <div class="form-group">
+              <label for="sexo">Sexo (*)</label>
+              <div *ngFor="let sexo of sexos">
+                <label class="radio-inline">
+                  <input type="radio" 
+                         [value]="sexo.chave" 
+                         formControlName="sexo"
+                         [(ngModel)]="usuario.sexo" /> {{sexo.valor}}
+                </label>
+              </div>
+            </div>  
+          </div>
+          <div class="col-2">  
+            <div class="form-group">
+              <label for="tipo">Tipo</label>
+              <select formControlName="tipo" 
+                      [(ngModel)]="usuario.tipo"
+                      class="form-control">
+                  <option *ngFor="let tipo of tipos" value="{{tipo.chave}}">{{tipo.valor}}</option>
+              </select>
+            </div>  
+          </div>
+          <div class="col-2">  
+            <div class="form-group">
+              <label for="nivel">Nível</label>
+              <select formControlName="nivel" 
+                      [(ngModel)]="usuario.nivel"
+                      class="form-control">
+                  <option *ngFor="let nivel of niveis" value="{{nivel.chave}}">{{nivel.valor}}</option>
+              </select>
+            </div>  
+          </div>
+          <div class="col-4">  
+            <div class="form-group">
+              <label for="cep">Cep</label>
+              <input  formControlName="cep"
+                      class="form-control" 
+                      placeholder="Informe um cep" />
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            Tecnologias
+            <div formArrayName="frameworks"
+              *ngFor="let item of formulario.get('frameworks').controls; let i = index">  
+                <label class="checkbox-inline">
+                  <input type="checkbox" [formControlName]="i" /> {{frameworks[i]}}
+                </label>
+            </div>
+          </div>
+          <div class="col-8">
+            <div>  
+              <div class="form-group">
+                <input type="checkbox" formControlName="termos" /> Aceito os termos.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <input 
+              type="submit"
+              (click)="salvar()"
+              value="Salvar"
+              [disabled]="!formulario.valid"
+              class="btn btn-primary"
+              style="width: 150px;">
+
+            &nbsp;
+            <button 
+              type="button" 
+              onclick="window.history.back(-1)"
+              class="btn btn-secondary"
+              style="width: 150px;">Voltar</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="row">
+        &nbsp;
+      </div>
+      <div class="row">
+        &nbsp;
+      </div>
+      <!-- fim do conteúdo -->
+
+    </div>
+
+    <app-form-debug [form]="formulario"></app-form-debug>
+    <p>.</p>
+    <p>.</p>
+
+  </div>
+  <footer class="sticky-footer">
+    <div class="container">
+      <div class="text-center">
+        <small>Copyright TopSpin 2019</small>
+      </div>
+    </div>
+  </footer>
+</div>

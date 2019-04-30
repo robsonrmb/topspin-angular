@@ -1,0 +1,34 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript: return false;">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        Página de erro
+      </li>
+    </ol>
+
+    <div class="col-12">
+      <div class="card border-info">
+        <div class="card-header text-center"><h2>ERRO {{erroGlobal.status}}</h2></div>
+        <div class="card-body bg-light">
+          <h5>
+            <p><b>Data:</b> {{erroGlobal.data | date:'dd-MM-yyyy'}}</p>
+            <p><b>Path:</b> {{erroGlobal.path}}</p>
+            <p><b>Mensagem:</b> {{erroGlobal.mensagem}}</p>
+            <p><b>Causa:</b> {{erroGlobal.causa}}</p>
+          </h5>
+          <h6>
+            <p>
+              <b>StackTrace (+)</b><br />
+              {{erroGlobal.stackTrace}}
+            </p>
+          </h6>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

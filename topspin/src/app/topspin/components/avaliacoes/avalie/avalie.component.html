@@ -1,0 +1,114 @@
+<div class="content-wrapper">
+    <div class="container-fluid">
+  
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="javascript: return false;">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          Avalie um atleta
+        </li>
+      </ol>
+      
+      <div class="col-12"> 
+        <!-- conteúdo da página -->
+        <form #formAvaliacoes="ngForm" novalidate>
+  
+          <h4>CADASTRAR AVALIAÇÕES</h4>
+          
+          <app-mensagens [mensagem]="mensagem"></app-mensagens>
+        
+          <div class="row">
+            <div class="col-4">
+              <div class="form-group">
+                <label form="data">Estado</label>
+                <select name="estadoUsuario" 
+                        [(ngModel)]="estado" 
+                        #estadoUsuario="ngModel" 
+                        (change)="atualizaUsuarios(estado)"
+                        class="form-control">
+                  <option *ngFor="let estado of estados" value="{{estado.chave}}">{{estado.valor}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label form="data">Usuários</label>
+                <select required 
+                        name="avaliado" 
+                        [(ngModel)]="avaliacao.idAvaliado" 
+                        #avaliado="ngModel"
+                        class="form-control">
+                  <option *ngFor="let usuario of usuarios" value="{{usuario.chave}}">{{usuario.valor}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row"><!-- *ngFor="let area of listaDeAvaliacoes" -->
+            <div class="col-6" *ngFor="let area of listaDeAvaliacoes; let i = index">
+              <div class="row m-2">
+                <div class="col-12 bg-light"><h5>{{area.nome}}</h5></div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row" *ngFor="let tipo of area.tipo; let j = index">
+                    
+                    <label class="col-3">{{tipo.nome}}</label>
+                    <div class="col-7">
+
+                      <select required
+                        name="tipo_{{tipo.nome}}" 
+                        [(ngModel)]="tipo.resposta_selecionada" 
+                        class="form-control">
+                        <option value="">Selecione...</option>
+                        <option *ngFor="let resposta of tipo.tipoRespostas" value="{{resposta.id}}">{{resposta.nome}}</option>
+                      </select>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12">
+              <input 
+                type="submit"
+                (click)="avaliar()"
+                value="Avaliar"
+                [disabled]="!formAvaliacoes.form.valid"
+                class="btn btn-primary"
+                style="width: 150px;">
+  
+              &nbsp;
+              <button 
+                type="button" 
+                onclick="window.history.back(-1)"
+                class="btn btn-secondary"
+                style="width: 150px;">Voltar</button>
+            </div>
+          </div>
+
+        </form>
+        <!-- fim do conteúdo -->
+  
+      </div>
+  
+    </div>
+
+    <app-form-debug [form]="formAvaliacoes"></app-form-debug>
+    <p>.</p>
+    <p>.</p>
+
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright TopSpin 2019</small>
+        </div>
+      </div>
+    </footer>
+  </div>
+  

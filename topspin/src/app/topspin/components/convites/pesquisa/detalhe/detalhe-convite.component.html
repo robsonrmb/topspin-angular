@@ -1,0 +1,24 @@
+<td>
+    <span *ngIf="tipo === 0">{{convite.nomeConvidado}} foi seu/sua convidado/a para jogar.</span>
+    <span *ngIf="tipo !== 0">{{convite.nomeUsuario}} lhe convidou para jogar.</span>
+</td>
+<td>{{convite.data | date:'dd/MM/yyyy'}}</td>
+<td>{{convite.localJogo}}</td>
+<td>{{imprimeDescricaoDoPeriodo(convite.periodo)}}</td>
+<td>{{convite.status}}</td>
+<td>{{convite.descricao}}</td>
+<td>
+    <button *ngIf="tipo === 0 && convite.status === 'P'" 
+            (click)="emitExcluirConvite()"
+            class="btn btn-warning btn-sm" style="width: 100px;">Excluir</button>
+    
+    &nbsp;
+    <button *ngIf="tipo !== 0 && convite.status === 'P'" 
+            (click)="emitAceitarConvite()"
+            class="btn btn-primary btn-sm" style="width: 100px;">Aceitar</button>
+    
+    &nbsp;
+    <button *ngIf="tipo !== 0 && convite.status === 'P'" 
+            (click)="emitRecusarConvite()"
+            class="btn btn-primary btn-sm" style="width: 100px;">Recusar</button>
+</td>

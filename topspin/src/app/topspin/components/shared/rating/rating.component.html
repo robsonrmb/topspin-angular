@@ -1,0 +1,9 @@
+<i *ngFor="let v of valores" 
+  class="fa" 
+  [class.fa-star]="v <= valor"
+  [class.fa-star-o]="v > valor"
+  (click)="setValor(v)"
+  (mouseenter)="setValorTemporario(v)"
+  (mouseleave)="setLimparValorTemporario()">
+</i>
+{{descricao}}

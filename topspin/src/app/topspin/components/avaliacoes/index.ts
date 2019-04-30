@@ -1,0 +1,5 @@
+export * from './cadastro'
+export * from './pesquisa'
+export * from './avalie'
+export * from './reactive'
+export * from './avaliacoes.module'

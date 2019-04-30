@@ -1,0 +1,7 @@
+export const RECURSO_URL_ACESSO = 'http://localhost:8080/acesso'
+export const RECURSO_URL_USUARIOS = 'http://localhost:8080/usuarios'
+export const RECURSO_URL_AMIGOS = 'http://localhost:8080/amigos'
+export const RECURSO_URL_CONVITES = 'http://localhost:8080/convites'
+export const RECURSO_URL_JOGOS = 'http://localhost:8080/jogos'
+export const RECURSO_URL_AVALIACOES = 'http://localhost:8080/avaliacoes'
+export const RECURSO_URL_ESTATISTICAS = 'http://localhost:8080/estatisticas'

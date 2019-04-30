@@ -1,0 +1,8 @@
+<div class="card border-warning" style="margin-top: 20px;" *ngIf="rendered()">
+  <div style="margin-left: 3px;" >
+    <p><b>Detalhes do form</b></p>
+    Form válido: {{ form.valid }} <br>
+    Form submetido: {{ form.submitted }}<br>
+    Valores: <br> {{ form.value | json }}
+  </div>
+</div>

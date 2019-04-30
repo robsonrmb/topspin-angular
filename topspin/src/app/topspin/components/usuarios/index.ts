@@ -1,0 +1,5 @@
+export * from './cadastro'
+export * from './pesquisa'
+export * from './amigos'
+export * from './cadastre'
+export * from './usuarios.module'

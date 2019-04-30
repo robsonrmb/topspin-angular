@@ -1,0 +1,138 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript: return false;">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        Últimos jogos
+      </li>
+    </ol>
+    
+    <div class="col-12"> 
+        
+      <!-- Outra maneira de submeter o formulário -->
+      <!-- <form #formJogos="ngForm" (ngSubmit)=onSubmit(formJogos) novalidate> -->
+      <!-- E no component deve criar o método onSubmit(form) -->
+      <form #formJogos="ngForm" novalidate>
+
+        <h4>CADASTRAR ÚLTIMOS JOGOS</h4>
+
+        <app-mensagens [mensagem]="mensagem"></app-mensagens>
+
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label form="data">Data do jogo</label>
+              <input  name="data" 
+                      id="data" 
+                      [(ngModel)]="jogo.dataJogoFormatada"
+                      class="form-control" 
+                      maxlength="10"
+                      required 
+                      (keyup)="formataData()" /> 
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label form="tipo">Tipo de jogo</label>
+              <select name="tipo" 
+                      [(ngModel)]="jogo.tipo" 
+                      class="form-control" 
+                      required>
+                <option *ngFor="let tipo of tipos" value="{{tipo.chave}}">{{tipo.valor}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">  
+            <div class="form-group">
+              <label form="resultado">Resultado da partida</label>
+              <select name="resultado" 
+                      [(ngModel)]="jogo.resultado" 
+                      class="form-control" 
+                      required>
+                <option *ngFor="let resultado of resultados" value="{{resultado.chave}}">{{resultado.valor}}</option>
+              </select>
+            </div>  
+          </div>
+          <div class="col-3">  
+            <div class="form-group">
+              <label form="placar">Placar da partida</label>
+              <select name="placar" 
+                      [(ngModel)]="jogo.placar" 
+                      class="form-control" 
+                      required>
+                <option *ngFor="let placar of placares" value="{{placar.chave}}">{{placar.valor}}</option>
+              </select>
+            </div>  
+          </div>
+        </div>
+        <div ngModelGroup="tiebreaks">
+          <div class="row">
+            <div class="col-4">  
+              <div class="form-group">
+                <label form="qtdTieVencidos">Qtd de tiebreaks vencidos</label>
+                <input  name="qtdTieVencidos" 
+                        id="qtdTieVencidos" 
+                        [(ngModel)]="jogo.qtdTieVencidos"
+                        class="form-control" 
+                        pattern="^[0-9]*$" 
+                        somenteNumeros />
+              </div>  
+            </div>
+            <div class="col-4">  
+              <div class="form-group">
+                <label form="qtdTiePerdidos">Qtd de tiebreaks perdidos</label>
+                <input  name="qtdTiePerdidos" 
+                        id="qtdTiePerdidos" 
+                        [(ngModel)]="jogo.qtdTiePerdidos"
+                        class="form-control" 
+                        pattern="^[0-9]*$" 
+                        somenteNumeros/>
+              </div>  
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <!-- 
+              Não precisaria passar o formJogos como parâmetro, pois
+              o two-binding está feito com o objeto jogo.
+            -->
+            <input 
+              type="submit"
+              (click)="salvar(formJogos)" 
+              value="Salvar"
+              [disabled]="!formJogos.form.valid"
+              class="btn btn-primary"
+              style="width: 150px;">
+
+            &nbsp;
+            <button 
+              type="button" 
+              onclick="window.history.back(-1)"
+              class="btn btn-secondary"
+              style="width: 150px;">Voltar</button>
+          </div>
+        </div>
+      </form>
+      <!-- fim do conteúdo -->
+
+    </div>
+
+    <app-form-debug [form]="formJogos"></app-form-debug>
+    <p>.</p>
+    <p>.</p>
+
+  </div>
+  <footer class="sticky-footer">
+    <div class="container">
+      <div class="text-center">
+        <small>Copyright TopSpin 2019</small>
+      </div>
+    </div>
+  </footer>
+</div>

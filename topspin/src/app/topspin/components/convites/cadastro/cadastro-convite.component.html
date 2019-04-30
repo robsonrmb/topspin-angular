@@ -1,0 +1,109 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript: return false;">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        Cadastro de convites
+      </li>
+    </ol>
+    
+    <div class="col-12"> 
+        
+      <!-- conteúdo da página -->
+      <form #formConvites="ngForm" novalidate>
+
+        <h4>CADASTRO DE CONVITES</h4>
+
+        <app-mensagens [mensagem]="mensagem"></app-mensagens>
+        
+        <div class="row">
+          <div class="col-12 bg-light">
+              <h5>Adversário: {{convidado.nome}}</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label form="data">Data</label>
+              <input  name="data" 
+                      id="data" 
+                      [(ngModel)]="convite.data"
+                      #data="ngModel"
+                      class="form-control"
+                      required/>
+            </div>
+          </div>
+          <div class="col-4">  
+            <div class="form-group">
+              <label form="localJogo">Local onde joga</label>
+              <input  name="localJogo" 
+                      id="localJogo" 
+                      [(ngModel)]="convite.localJogo"
+                      #localJogo="ngModel"
+                      class="form-control" />
+              
+            </div>  
+          </div>
+          <div class="col-3">  
+            <div class="form-group">
+              <label form="periodo">Período</label>
+              <select name="periodo"
+                      id="periodo" 
+                      [(ngModel)]="convite.periodo" 
+                      #periodo="ngModel"
+                      class="form-control"
+                      required>
+                <option *ngFor="let periodo of periodos" value="{{periodo.chave}}">{{periodo.valor}}</option>
+              </select>
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="form-group">
+              <label form="descricao">Descrição</label>
+              <input  name="descricao" 
+                      id="descricao" 
+                      [(ngModel)]="convite.descricao"
+                      #descricao="ngModel"
+                      class="form-control"
+                      aria-describedby="localJogoHelp"/>
+              <small id="localJogoHelp" class="form-text text-muted">Ex.: Dessa vez eu vou ganhar!!!</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <input 
+              type="submit"
+              (click)="salvar()"
+              value="Salvar"
+              [disabled]="!formConvites.form.valid"
+              class="btn btn-primary"
+              style="width: 150px;">
+
+            &nbsp;
+            <button 
+              type="button" 
+              onclick="window.history.back(-1)"
+              class="btn btn-secondary"
+              style="width: 150px;">Voltar</button>
+          </div>
+        </div>
+      </form>
+      <!-- fim do conteúdo -->
+
+    </div>
+
+  </div>
+  <footer class="sticky-footer">
+    <div class="container">
+      <div class="text-center">
+        <small>Copyright TopSpin 2019</small>
+      </div>
+    </div>
+  </footer>
+</div>

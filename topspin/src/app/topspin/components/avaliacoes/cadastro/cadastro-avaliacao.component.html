@@ -1,0 +1,324 @@
+<div class="content-wrapper">
+    <div class="container-fluid">
+  
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="javascript: return false;">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          Avalie um atleta
+        </li>
+      </ol>
+      
+      <div class="col-12"> 
+        <!-- conteúdo da página -->
+        <form #formAvaliacoes="ngForm" novalidate>
+  
+          <h4>CADASTRAR AVALIAÇÕES</h4>
+          
+          <app-mensagens [mensagem]="mensagem"></app-mensagens>
+
+          <div class="row">
+            <div class="col-4">
+              <div class="form-group">
+                <label form="data">Estado</label>
+                <select name="estadoUsuario" 
+                        [(ngModel)]="estado" 
+                        #estadoUsuario="ngModel" 
+                        (change)="atualizaUsuarios(estado)"
+                        class="form-control">
+                  <option *ngFor="let estado of estados" value="{{estado.chave}}">{{estado.valor}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label form="data">Usuários</label>
+                <select required 
+                        name="avaliado" 
+                        [(ngModel)]="avaliacao.idAvaliado" 
+                        #avaliado="ngModel"
+                        class="form-control">
+                  <option *ngFor="let usuario of usuarios" value="{{usuario.chave}}">{{usuario.valor}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="form-group">
+                <label form="data">Tipo de avaliação</label>
+                <select required 
+                        name="tipo" 
+                        [(ngModel)]="tipoAvaliacao" 
+                        #tipo="ngModel"
+                        class="form-control"
+                        (change)="limpaValoresAvaliacao()">
+                  <option value="0">Estrelas</option>
+                  <option value="1">Padrão</option>
+                  <option value="2">Dinâmico</option>
+                  <option value="3">Reactive Forms</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row bg-light m-1">
+            <div class="col-6">
+              <div class="col-12"><h5>Avaliações Técnicas</h5></div>
+            </div>
+            <div class="col-6">
+              <div class="col-12"><h5>Avaliações Táticas</h5></div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Saque</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                      <select required 
+                              name="saque" 
+                              [(ngModel)]="avaliacao.respostaSaque" 
+                              #saque="ngModel"
+                              class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                      </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'saque')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Forehand</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                        <select required 
+                                name="forehand" 
+                                [(ngModel)]="avaliacao.respostaForehand" 
+                                #forehand="ngModel"
+                                class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'forehand')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Backhand</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                        <select required 
+                                name="backhand"  
+                                [(ngModel)]="avaliacao.respostaBackhand" 
+                                #backhand="ngModel"
+                                class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'backhand')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Voleio</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                        <select required 
+                                name="voleio" 
+                                [(ngModel)]="avaliacao.respostaVoleio" 
+                                #voleio="ngModel"
+                                class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'voleio')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Smash</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                        <select required 
+                                name="smash" 
+                                [(ngModel)]="avaliacao.respostaSmash" 
+                                #smash="ngModel"
+                                class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'smash')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Ofensivo</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                        <select required 
+                                name="ofensivo" 
+                                [(ngModel)]="avaliacao.respostaOfensivo" 
+                                #ofensivo="ngModel"
+                                class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'ofensivo')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Defensivo</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                        <select required 
+                                name="defensivo" 
+                                [(ngModel)]="avaliacao.respostaDefensivo" 
+                                #defensivo="ngModel"
+                                class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'defensivo')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Tático</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                        <select required 
+                                name="tatico" 
+                                [(ngModel)]="avaliacao.respostaTatico" 
+                                #tatico="ngModel"
+                                class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'tatico')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Competitivo</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                        <select required 
+                                name="competitivo" 
+                                [(ngModel)]="avaliacao.respostaCompetitivo" 
+                                #competitivo="ngModel"
+                                class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'competitivo')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group row">
+                    
+                    <label class="col-3">Preparo físico</label>
+                    <div *ngIf="tipoAvaliacao == 1" class="col-3">
+                        <select required 
+                                name="preparo" 
+                                [(ngModel)]="avaliacao.respostaPreparo" 
+                                #preparo="ngModel"
+                                class="form-control">
+                          <option *ngFor="let resposta of respostas" value="{{resposta.chave}}">{{resposta.valor}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="tipoAvaliacao == 0" class="col-4">
+                      <app-rating (valorEmit)="setValorSelecionado($event, 'preparo')"></app-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="col-12">
+              <input 
+                type="submit"
+                (click)="avaliar()"
+                value="Avaliar"
+                [disabled]="!formAvaliacoes.form.valid"
+                class="btn btn-primary"
+                style="width: 150px;">
+  
+              &nbsp;
+              <button 
+                type="button" 
+                onclick="window.history.back(-1)"
+                class="btn btn-secondary"
+                style="width: 150px;">Voltar</button>
+            </div>
+          </div>
+        </form>
+        <!-- fim do conteúdo -->
+  
+      </div>
+      <p>.</p>
+      <p>.</p>
+    </div>
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Copyright TopSpin 2019</small>
+        </div>
+      </div>
+    </footer>
+  </div>
+  

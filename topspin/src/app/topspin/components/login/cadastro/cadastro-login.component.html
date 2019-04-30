@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <nav class="navbar fixed-top navbar-primary bg-primary"><!-- style="background-color: #123123 -->
+          <a class="navbar-brand text-light" [routerLink]="['login']" href="javascript: return false;">
+            <img src="../../../../assets/images/web_hi_res_512.png" style="width: 40; height: 40px;" />
+            TopSpin
+          </a>
+        </nav>
+      </div>
+    </div>
+    <div class="row">
+      &nbsp;
+    </div>
+    <div class="row">
+      <div class="card card-login mx-auto mt-5" style="width: 30rem;">
+        <div class="card-header">Cadastro de usuários</div>
+        <div class="card-body">
+          <form #formCadLogin="ngForm" novalidate>
+            <div class="form-group">
+              <label form="nome">Nome</label>
+              <input  name="nome" 
+                      id="nome" 
+                      [(ngModel)]="formCadastroLoginModel.nome"
+                      #nome="ngModel"
+                      minlength="5" 
+                      required
+                      class="form-control" 
+                      placeholder="Digite seu nome" />
+            </div>
+            <div class="form-group">
+              <label form="email">Email</label>
+              <input  name="email" 
+                      id="email" 
+                      [(ngModel)]="formCadastroLoginModel.email"
+                      #email="ngModel"
+                      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                      minlength="5" 
+                      required
+                      class="form-control" 
+                      placeholder="Digite seu email" 
+                      aria-describedby="emailHelp"/>
+              <small id="emailHelp" class="form-text text-muted">Ex.: seuemail@seudominio.com</small>
+              <!-- 
+              <div [hidden]="email.valid || email.untouched">
+                <div *ngIf="email.errors && email.errors.pattern">
+                  Email inválido
+                </div>
+              </div>
+              -->
+            </div>
+            <div class="form-group">
+              <label form="senha">Senha</label>
+              <input  name="senha" 
+                      id="senha" 
+                      [(ngModel)]="formCadastroLoginModel.senha"
+                      #senha="ngModel"
+                      minlength="3" 
+                      required
+                      class="form-control" 
+                      placeholder="Digite sua senha" />
+            </div>
+            <div class="form-group">
+              <label form="sexo">Sexo</label><br />
+              <select name="sexo" 
+                      [(ngModel)]="formCadastroLoginModel.sexo" 
+                      #sexo="ngModel"
+                      class="form-control"
+                      required>
+
+                  <option selected value="">Selecione um sexo</option>
+                  <option *ngFor="let sexo of sexos" value="{{sexo.chave}}">{{sexo.valor}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label form="estado">Estado</label><br />
+              <select name="estado" 
+                      [(ngModel)]="formCadastroLoginModel.estado" 
+                      #estado="ngModel"
+                      class="form-control"
+                      required>
+
+                  <option selected value="">Selecione um estado</option>
+                  <option *ngFor="let estado of estados" value="{{estado.chave}}">{{estado.valor}}</option>
+              </select>
+            </div>
+            <input *ngIf="!formCadLogin.form.valid"  
+                  type="submit"
+                  (click)="salvar()"
+                  value="Salvar"
+                  [disabled]="!formCadLogin.form.valid"
+                  class="btn btn-secondary btn-block" style="opacity: 0.3">
+  
+            <input *ngIf="formCadLogin.form.valid"  
+                  type="submit"
+                  (click)="salvar()"
+                  value="Salvar"
+                  [disabled]="!formCadLogin.form.valid"
+                  class="btn btn-primary btn-block">
+
+            <button type="button" class="btn btn-secondary btn-block" onclick="window.history.back(-1)">Voltar</button> 
+          </form>
+        </div>
+        <div class="card-footer">
+          <span class="text-dark" *ngIf="!isMensagem()">...</span>
+          <span class="text-danger" *ngIf="isMensagem()">{{mensagemErro}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  

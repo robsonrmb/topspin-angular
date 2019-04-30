@@ -1,0 +1,200 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript: return false;">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        Avalie um atleta (reactive forms)
+      </li>
+    </ol>
+
+    <div class="col-12"> 
+      <!-- conteúdo da página -->
+      <form [formGroup]="cadastroForm" novalidate>
+
+        <h4>CADASTRAR AVALIAÇÕES</h4>
+        
+        <app-mensagens [mensagem]="mensagem"></app-mensagens>
+
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label form="data">Estado</label>
+              <select formControlName="estado"
+                      [(ngModel)]="estado"  
+                      (change)="atualizaUsuarios(estado)" 
+                      class="form-control">
+                <option *ngFor="let estado of estados" value="{{estado.chave}}">{{estado.valor}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label form="data">Usuários</label>
+              <select formControlName="idAvaliado" 
+                      [(ngModel)]="avaliacao.idAvaliado"
+                      class="form-control">
+                <option *ngFor="let usuario of usuarios" value="{{usuario.chave}}">{{usuario.valor}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row bg-light m-1">
+          <div class="col-6">
+            <div class="col-12"><h5>Avaliações Técnicas</h5></div>
+          </div>
+          <div class="col-6">
+            <div class="col-12"><h5>Avaliações Táticas</h5></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Saque</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'saque')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Forehand</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'forehand')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Backhand</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'backhand')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Voleio</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'voleio')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Smash</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'smash')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-6">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Ofensivo</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'ofensivo')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Defensivo</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'defensivo')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Tático</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'tatico')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Competitivo</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'competitivo')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group row">
+                  
+                  <label class="col-3">Preparo físico</label>
+                  <div class="col-4">
+                    <app-rating (valorEmit)="setValorSelecionado($event, 'preparo')"></app-rating>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <input 
+              type="submit"
+              (click)="avaliar()"
+              value="Avaliar"
+              [disabled]="!cadastroForm.valid"
+              class="btn btn-primary"
+              style="width: 150px;">
+
+            &nbsp;
+            <button 
+              type="button" 
+              onclick="window.history.back(-1)"
+              class="btn btn-secondary"
+              style="width: 150px;">Voltar</button>
+          </div>
+        </div>
+
+      </form>
+
+      <app-form-debug [form]="cadastroForm"></app-form-debug>
+      <p>.</p>
+      <p>.</p>
+  
+  </div>
+</div>
+    

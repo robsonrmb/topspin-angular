@@ -1,0 +1,96 @@
+<div class="content-wrapper">
+  <div class="container-fluid">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript: return false;">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        Estatísticas
+      </li>
+    </ol>
+    
+    <div class="col-12"> 
+      <!-- conteúdo da página -->
+      <form #formEstatisticas="ngForm" novalidate>
+  
+        <h4>PESQUISA ESTATÍSTICAS DE UM ATLETA</h4>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label form="data">Estado</label>
+              <select name="estadoUsuario" 
+                      [(ngModel)]="estado" 
+                      #estadoUsuario="ngModel" 
+                      (change)="atualizaUsuarios(estado)"
+                      class="form-control">
+                <option *ngFor="let estado of estados" value="{{estado.chave}}">{{estado.valor}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label form="data">Usuários</label>
+              <select required 
+                      name="usuario" 
+                      [(ngModel)]="usuarioSelecionado.id" 
+                      #usuario="ngModel"
+                      (change)="atualizaEstatisticas(usuarioSelecionado.id)"
+                      class="form-control">
+                <option *ngFor="let usuario of usuarios" value="{{usuario.chave}}">{{usuario.valor}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label form="data">Tipo de gráfico</label>
+              <select required 
+                      name="tipoGrafico" 
+                      [(ngModel)]="tpGrafico" 
+                      #tipoGrafico="ngModel"
+                      (change)="atualizaEstatisticasGraficos()"
+                      class="form-control">
+                <option value="barra">BARRA</option>
+                <option value="coluna">COLUNA</option>
+                <option value="pizza">PIZZA</option>
+                <option value="linha">LINHA</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="col-12" *ngIf="usuarioSelecionado.id != undefined">
+          <table>
+          <tr class="bg-light">
+            <th>ESTATÍSTICAS GERAIS</th>
+            <th>TÉCNICAS</th>
+            <th>TÁTICAS</th>
+          </tr>
+          <tr>
+            <td valign="top">
+              <div id="pie_chart_vd"></div>
+              <div id="pie_chart_tie"></div>
+            </td>
+            <td valign="top">
+              <div id="pie_chart_saque"></div>
+              <div id="pie_chart_forehand"></div>
+              <div id="pie_chart_backhand"></div>
+              <div id="pie_chart_voleio"></div>
+              <div id="pie_chart_smash"></div>
+            </td>
+            <td valign="top">
+              <div id="pie_chart_ofensivo"></div>
+              <div id="pie_chart_defensivo"></div>
+              <div id="pie_chart_tatico"></div>
+              <div id="pie_chart_competitivo"></div>
+              <div id="pie_chart_preparo"></div>
+            </td>
+          </tr>
+          </table>
+        </div>
+      </form>
+      <p>&nbsp;</p>
+    </div>
+
+  </div>
+</div>
