@@ -21,7 +21,7 @@ export class AmigoService {
   }
 
   colocarComoAmigo(formUsuarioAmigo: FormUsuarioAmigo): Observable<boolean> {
-    return this.http.post(`${environment.recurso_url.amigos}/add`, formUsuarioAmigo)
+    return this.http.post(`${environment.recurso_url.amigos}`, formUsuarioAmigo)
                     .map(response => true)
                     .catch(error => throwError(error));
   }

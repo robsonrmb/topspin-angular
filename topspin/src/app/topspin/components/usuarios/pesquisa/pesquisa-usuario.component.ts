@@ -81,6 +81,7 @@ export class PesquisaUsuarioComponent implements OnInit {
           },
           (error) => {
             this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao colocar usuário como amigo!!!');
+            console.log(error);
           }
         );
   }
@@ -96,6 +97,7 @@ export class PesquisaUsuarioComponent implements OnInit {
           },
           (error) => {
             this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao retirar usuário como amigo!!!');
+            console.log(error);
           }
         )
   }
