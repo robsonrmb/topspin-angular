@@ -9,3 +9,4 @@ export * from './const.placares';
 export * from './const.respostas.performance';
 export * from './const.sexos';
 export * from './enums';
+export * from './constantes.sistema';

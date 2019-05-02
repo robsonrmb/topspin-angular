@@ -46,7 +46,8 @@ export class CadastroUsuarioComponent implements OnInit {
             this.mensagem = new Mensagem(MensagemEnum.S, 'Usuário alterado com sucesso!!!');
           },
           (error) => {
-            this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao alterar usuário!!!');
+            let excecao = JSON.parse(error._body);
+            this.mensagem = new Mensagem(MensagemEnum.E, excecao.msg);
           }
         );
   }

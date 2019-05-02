@@ -5,6 +5,7 @@ import { NgForm } from '@angular/forms';
 import { LoginService, LoginMockService, ConviteService, AvaliacaoService } from '../../../services';
 import { Login, Usuario, ExceptionTS } from '../../../models';
 import { UsuarioService } from 'src/app/topspin/services/usuario.service';
+import { CONSTANTE_TOKEN } from 'src/app/topspin/constantes';
 
 @Component({
   selector: 'app-entrada-login',
@@ -28,7 +29,7 @@ export class EntradaLoginComponent implements OnInit {
   ngOnInit() {
     this.mensagemErro = '';
     this.loginModel = new Login();
-    this.loginModel.email = 'robson@gmail.com';
+    this.loginModel.email = 'robson.rmb@gmail.com';
     this.loginModel.senha = '123';
     this.loginService.logout();
     
@@ -42,7 +43,8 @@ export class EntradaLoginComponent implements OnInit {
 
   entrar() {
     this.loginService.login(this.loginModel).subscribe(
-      (result: boolean) => {
+      (result: string) => {
+        //console.log("chegou..." + result);
         if (result) {
           this.loginService.setUsuarioLogado(true);
           this.usuarioService
@@ -53,6 +55,7 @@ export class EntradaLoginComponent implements OnInit {
                 window.sessionStorage.setItem('idUsuario', response.id);
                 window.sessionStorage.setItem('emailUsuario', response.email);
                 window.sessionStorage.setItem('nomeUsuario', response.nome);
+                window.sessionStorage.setItem(CONSTANTE_TOKEN, result);
 
                 this.usuarioService.setUsuarioLogado(true);
                 this.usuarioService.setUsuario(response);

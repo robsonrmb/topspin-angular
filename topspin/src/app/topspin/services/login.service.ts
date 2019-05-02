@@ -27,9 +27,9 @@ export class LoginService {
     this.logado = valor;
   }
 
-  login(loginModel: Login): Observable<boolean> {
-    return this.http.post(`${environment.recurso_url.acesso}/existe`, loginModel)
-                    .map(response => response.json())
+  login(loginModel: Login): Observable<string> {
+    return this.http.post(`${environment.recurso_url.login}`, loginModel)
+                    .map(response => response.headers.get('Authorization'))
                     .catch(error => throwError(error));
   }
 
@@ -38,7 +38,7 @@ export class LoginService {
   }
 
   inclui(formCadastroLoginModel: FormCadastroLogin): Observable<boolean> {
-    return this.http.post(`${environment.recurso_url.acesso}/add`, formCadastroLoginModel)
+    return this.http.post(`${environment.recurso_url.usuarios}`, formCadastroLoginModel)
                     .map(response => true)
                     .catch(error => throwError(error));
   }

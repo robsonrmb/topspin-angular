@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   recurso_url: {
+    login: 'http://localhost:8080/login',
     acesso: 'http://localhost:8080/acesso',
     usuarios: 'http://localhost:8080/usuarios',
     amigos: 'http://localhost:8080/amigos',

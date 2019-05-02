@@ -65,6 +65,7 @@ export class PesquisaUsuarioComponent implements OnInit {
         },
         (error) => {
           this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao pesquisar usuários!!!');
+          console.log(error);
         }
       )
   }

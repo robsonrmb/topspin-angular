@@ -6,6 +6,8 @@ import { throwError } from 'rxjs';
 //import { RECURSO_URL_AMIGOS } from '../constantes';
 import { environment } from '../../../environments/environment';
 import { Usuario } from '../models/usuario.model';
+import { HttpHeaders } from '@angular/common/http';
+import { CONSTANTE_TOKEN } from '../constantes';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +57,10 @@ export class UsuarioService {
   }
 
   altera(usuario: Usuario): Observable<boolean> {
-    return this.http.put(`${environment.recurso_url.usuarios}/update`, usuario)
+    let headers = new HttpHeaders();
+    console.log(window.sessionStorage.getItem('token'));
+    headers = headers.set('Authorization', window.sessionStorage.getItem(CONSTANTE_TOKEN))
+    return this.http.put(`${environment.recurso_url.usuarios}`, usuario)  //, {headers: headers}
                     .map(response => true)
                     .catch(error => throwError(error));
   }
