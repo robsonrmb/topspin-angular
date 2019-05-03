@@ -59,24 +59,54 @@ export class CadastroJogoComponent implements OnInit {
   validaFormulario(): string {
     let mensagem: string = '';
     if (this.jogo.placar == '0') { // 2a0
-      if (this.jogo.qtdTieVencidos > 2 || this.jogo.qtdTiePerdidos > 0) {
-        mensagem = 'Erro';
+      if (this.jogo.resultado == 'V'){
+        if (this.jogo.qtdTieVencidos > 2 || this.jogo.qtdTiePerdidos > 0) {
+          mensagem = 'Erro';
+        }
+      }else{
+        if (this.jogo.qtdTiePerdidos > 2 || this.jogo.qtdTieVencidos > 0) {
+          mensagem = 'Erro';
+        }
       }
     } else if (this.jogo.placar == '1') { // 2a1
-      if (this.jogo.qtdTieVencidos > 2 || this.jogo.qtdTiePerdidos > 1) {
-        mensagem = 'Erro';
+      if (this.jogo.resultado == 'V'){
+        if (this.jogo.qtdTieVencidos > 2 || this.jogo.qtdTiePerdidos > 1) {
+          mensagem = 'Erro';
+        }
+      }else{
+        if (this.jogo.qtdTiePerdidos > 2 || this.jogo.qtdTieVencidos > 1) {
+          mensagem = 'Erro';
+        }
       }
     } else if (this.jogo.placar == '2') { // 3a0
-      if (this.jogo.qtdTieVencidos > 3 || this.jogo.qtdTiePerdidos > 0) {
-        mensagem = 'Erro';
+      if (this.jogo.resultado == 'V'){
+        if (this.jogo.qtdTieVencidos > 3 || this.jogo.qtdTiePerdidos > 0) {
+          mensagem = 'Erro';
+        }
+      }else{
+        if (this.jogo.qtdTiePerdidos > 3 || this.jogo.qtdTieVencidos > 0) {
+          mensagem = 'Erro';
+        }
       }
     } else if (this.jogo.placar == '3') { // 3a1
-      if (this.jogo.qtdTieVencidos > 3 || this.jogo.qtdTiePerdidos > 1) {
-        mensagem = 'Erro';
+      if (this.jogo.resultado == 'V'){
+        if (this.jogo.qtdTieVencidos > 3 || this.jogo.qtdTiePerdidos > 1) {
+          mensagem = 'Erro';
+        }
+      }else{
+        if (this.jogo.qtdTiePerdidos > 3 || this.jogo.qtdTieVencidos > 1) {
+          mensagem = 'Erro';
+        }
       }
     } else if (this.jogo.placar == '4') { // 3a2
-      if (this.jogo.qtdTieVencidos > 3 || this.jogo.qtdTiePerdidos > 2) {
-        mensagem = 'Erro';
+      if (this.jogo.resultado == 'V'){
+        if (this.jogo.qtdTieVencidos > 3 || this.jogo.qtdTiePerdidos > 2) {
+          mensagem = 'Erro';
+        }
+      }else{
+        if (this.jogo.qtdTiePerdidos > 3 || this.jogo.qtdTieVencidos > 2) {
+          mensagem = 'Erro';
+        }
       }
     }
     if (mensagem == 'Erro') {
