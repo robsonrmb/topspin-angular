@@ -48,6 +48,7 @@ export class PesquisaAvaliacaoComponent implements OnInit {
       .subscribe(
         (result) => {
           // this.mensagem = new Mensagem(MensagemEnum.S, 'Avaliação confirmada com sucesso!!!')
+          this.avaliacaoService.atualizaQtdDeAvaliacoesPendentes();
           this.router.navigate(['dashboard']);
         },
         (error) => this.mensagem = new Mensagem(MensagemEnum.S, 'Erro ao confirmar avaliação!!!')
@@ -60,6 +61,7 @@ export class PesquisaAvaliacaoComponent implements OnInit {
       .subscribe(
         (result) => {
           //this.mensagem = new Mensagem(MensagemEnum.S, 'Avaliação recusada com sucesso!!!')
+          this.avaliacaoService.atualizaQtdDeAvaliacoesPendentes();
           this.router.navigate(['dashboard'])
         },
         (error) => this.mensagem = new Mensagem(MensagemEnum.S, 'Erro ao recusar avaliação!!!')

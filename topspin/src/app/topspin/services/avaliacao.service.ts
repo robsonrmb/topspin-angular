@@ -92,4 +92,16 @@ export class AvaliacaoService {
     return parseInt(sessionStorage.getItem('qtdConvitesPendentes'));
   }
 
+  atualizaQtdDeAvaliacoesPendentes() {
+    let qtd: number = parseInt(sessionStorage.getItem('qtdAvaliacoesPendentes'));
+    qtd = qtd-1;
+    window.sessionStorage.setItem('qtdAvaliacoesPendentes', qtd.toString());
+  }
+
+  atualizaQtdDeConvitesPendentes() {
+    let qtd: number = parseInt(sessionStorage.getItem('qtdConvitesPendentes'));
+    qtd = qtd-1;
+    window.sessionStorage.setItem('qtdConvitesPendentes', qtd.toString());
+  }
+
 }
