@@ -79,4 +79,10 @@ export class ConviteService {
                     .map(response => response.json())
                     .catch(error => throwError(error));
   }
+
+  atualizaQtdDeConvitesPendentes() {
+    let qtd: number = parseInt(sessionStorage.getItem('qtdConvitesPendentes'));
+    qtd = qtd-1;
+    window.sessionStorage.setItem('qtdConvitesPendentes', qtd.toString());
+  }
 }

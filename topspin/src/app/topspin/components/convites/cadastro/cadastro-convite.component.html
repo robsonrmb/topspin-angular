@@ -30,10 +30,11 @@
               <label form="data">Data</label>
               <input  name="data" 
                       id="data" 
-                      [(ngModel)]="convite.data"
+                      [(ngModel)]="convite.dataFormatada"
                       #data="ngModel"
                       class="form-control"
-                      required/>
+                      required 
+                      (keyup)="formataData()" />
             </div>
           </div>
           <div class="col-4">  

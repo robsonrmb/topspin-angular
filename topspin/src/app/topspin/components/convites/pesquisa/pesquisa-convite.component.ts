@@ -34,7 +34,6 @@ export class PesquisaConviteComponent implements OnInit {
   }
 
   excluirConvite(convite: Convite) {
-    console.log('Excluir convite: ', convite)
     this.conviteService
       .exclui(convite.id)
       .subscribe(
@@ -47,11 +46,11 @@ export class PesquisaConviteComponent implements OnInit {
   }
 
   aceitarConvite(convite: Convite) {
-    console.log('Aceitar convite: ', convite)
     this.conviteService
       .aceita(convite)
       .subscribe(
         (result) => {
+          this.conviteService.atualizaQtdDeConvitesPendentes();
           this.mensagem = new Mensagem(MensagemEnum.S, 'Convite aceito com sucesso!!!')
           this.carregaGrids()
         },
@@ -60,11 +59,11 @@ export class PesquisaConviteComponent implements OnInit {
   }
 
   recusarConvite(convite: Convite) {
-    console.log('Recusar convite: ', convite)
     this.conviteService
       .recusa(convite)
       .subscribe(
         (result) => {
+          this.conviteService.atualizaQtdDeConvitesPendentes();
           this.mensagem = new Mensagem(MensagemEnum.S, 'Convite recusado com sucesso!!!')
           this.carregaGrids()
         },

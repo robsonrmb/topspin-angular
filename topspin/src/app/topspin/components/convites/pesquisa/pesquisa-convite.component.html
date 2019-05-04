@@ -91,7 +91,9 @@
               <app-detalhe-convite 
                 [convite]="convite" 
                 [tipo]="2"
-                (aceita)="aceitarConvite($event)"></app-detalhe-convite>
+                (aceita)="aceitarConvite($event)"
+                (recusa)="recusarConvite($event)"
+                (exclui)="excluirConvite($event)"></app-detalhe-convite>
             </tr>
           </table>
         </div>

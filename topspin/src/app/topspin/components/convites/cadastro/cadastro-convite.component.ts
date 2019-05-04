@@ -40,6 +40,7 @@ export class CadastroConviteComponent implements OnInit {
 
   salvar() {
     let conviteFinal = this.convite
+    this.convite.data = this.converteData_ddMMyyyy_para_yyyyMMdd(this.convite.dataFormatada);
     conviteFinal.idUsuario = this.usuarioService.getUsuario().id
     conviteFinal.idConvidado = this.convidado.id
     this.conviteService.inclui(conviteFinal)
@@ -52,6 +53,25 @@ export class CadastroConviteComponent implements OnInit {
             this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao convidar usuário para jogar!!!')
           }
         )
+  }
+
+  formataData() {
+    let dt = this.convite.dataFormatada;
+    if (dt != undefined) {
+      if (dt.length == 2) {
+        dt = dt + '/';
+      }else if (dt.length == 5) {
+        dt = dt + '/';
+      }
+    }
+    this.convite.dataFormatada = dt;
+  }
+
+  private converteData_ddMMyyyy_para_yyyyMMdd(data: string): string {
+    let dataF = data.substring(6) + '-' +
+                data.substring(3,5) + '-' +
+                data.substring(0,2);
+    return dataF;
   }
 
 }

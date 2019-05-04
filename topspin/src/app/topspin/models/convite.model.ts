@@ -10,6 +10,7 @@ export class Convite {
 		public descricao?: string,
 		public status?: string,
 		public nomeUsuario?: string,
-		public nomeConvidado?: string) {}
+		public nomeConvidado?: string,
+		public dataFormatada?: string) {}
 		
 }

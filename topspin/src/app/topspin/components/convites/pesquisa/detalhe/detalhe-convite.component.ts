@@ -30,7 +30,6 @@ export class DetalheConviteComponent implements OnInit {
   }
 
   emitAceitarConvite() {
-    console.log("Aceitando convite", this.convite)
     this.aceita.emit(this.convite)
   }
 
