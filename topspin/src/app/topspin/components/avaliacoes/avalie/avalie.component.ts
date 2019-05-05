@@ -53,8 +53,14 @@ export class AvalieComponent implements OnInit {
 
     this.avaliacaoService.listaAreaAvaliacoes().subscribe(
       (result) => {
-        console.log(result);
         this.listaDeAvaliacoes = result;
+        /*
+        console.log(result);
+        Execução apenas para teste durante o desenvolvimento
+        for (let i=0; i<this.listaDeAvaliacoes.length;i++) {
+          this.listaDeAvaliacoes[i].tipo = undefined
+        }
+        */
       },
       (error) => console.log('Erro ao listar as avaliações!!!')
     );

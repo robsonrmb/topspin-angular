@@ -44,14 +44,14 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row"><!-- *ngFor="let area of listaDeAvaliacoes" -->
             <div class="col-6" *ngFor="let area of listaDeAvaliacoes; let i = index">
               <div class="row m-2">
                 <div class="col-12 bg-light"><h5>{{area.nome}}</h5></div>
               </div>
               <div class="row">
-                <div class="col-12">
+                <div class="col-12" *ngIf="(area.tipo != undefined && area.tipo.length > 0)">
                   <div class="form-group row" *ngFor="let tipo of area.tipo; let j = index">
                     
                     <label class="col-3">{{tipo.nome}}</label>
@@ -61,12 +61,17 @@
                         name="tipo_{{tipo.nome}}" 
                         [(ngModel)]="tipo.resposta_selecionada" 
                         class="form-control">
-                        <option value="">Selecione...</option>
+                        <option *ngIf="(tipo.tipoRespostas.length > 0)" value="">Selecione...</option>
+                        <option *ngIf="!(tipo.tipoRespostas.length > 0)" value="">Respostas não cadastradas...</option>
                         <option *ngFor="let resposta of tipo.tipoRespostas" value="{{resposta.id}}">{{resposta.nome}}</option>
                       </select>
 
                     </div>
-
+                  </div>
+                </div>
+                <div class="col-12" *ngIf="!(area.tipo != undefined && area.tipo.length > 0)">  
+                  <div class="form-group row">
+                    <label class="col-10">Tipos de avaliações não cadastradas.</label>
                   </div>
                 </div>
               </div>

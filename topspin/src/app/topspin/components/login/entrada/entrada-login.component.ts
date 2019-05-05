@@ -76,6 +76,7 @@ export class EntradaLoginComponent implements OnInit {
       },
       (error: ExceptionTS) => {
         let excecao = JSON.parse(error._body);
+        console.log(excecao);
         this.mensagemErro = excecao.message;
         this.traceDeveloper(error, excecao);
       }

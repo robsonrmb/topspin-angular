@@ -6,7 +6,7 @@ import { Permissao } from '../../security';
 
 const jogosRoutes: Routes = [
   {path: 'cadJogo', component: CadastroJogoComponent, canLoad: [Permissao], canActivate: [Permissao]}
-];
+]; //cadJogo
 
 @NgModule({
   imports: [RouterModule.forChild(jogosRoutes)],

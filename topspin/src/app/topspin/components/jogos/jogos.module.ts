@@ -9,11 +9,11 @@ import { NumeroDirective } from '../../directives';
 import { SharedModule } from '../shared';
 import { JogosRoutingModule } from './jogos.routing.module';
 import { Permissao } from '../../security';
-/*
+
 const jogosRoutes: Routes = [
   {path: '', component: CadastroJogoComponent, canLoad: [Permissao], canActivate: [Permissao]}
 ];
-*/
+
 @NgModule({
   declarations: [
     CadastroJogoComponent,
@@ -23,7 +23,7 @@ const jogosRoutes: Routes = [
     CommonModule,
     FormsModule,
     SharedModule,
-    JogosRoutingModule
+    JogosRoutingModule,
     //RouterModule.forChild(jogosRoutes)
   ],
   providers: [

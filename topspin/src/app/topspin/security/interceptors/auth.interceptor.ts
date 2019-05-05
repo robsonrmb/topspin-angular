@@ -16,6 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
         console.log('Interceptando ...', request);
+        /*
         const loginService = this.injector.get(LoginService);
         if (!loginService.isUsuarioLogado()) {
             if (window.sessionStorage.getItem('usuarioLogado') == 'S') {
@@ -33,6 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
                     });
             }
         }
+        */
         return next.handle(request);
     }
 

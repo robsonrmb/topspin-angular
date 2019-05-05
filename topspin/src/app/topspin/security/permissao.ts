@@ -12,22 +12,24 @@ export class Permissao implements CanLoad, CanActivate {
         
         let loggedIn: boolean = false;
         if (window.sessionStorage.getItem('usuarioLogado') == 'S') {
+            console.log('Usuário logado. Navegação em andamento.');
             loggedIn = true;
         }
         
         if (!loggedIn) {
+            console.log('Usuário não está logado.');
             this.loginService.handleLogin('/login');
         }
         return loggedIn;
     }
 
     canLoad(route: Route): boolean {
-        console.log('canLoad')
+        console.log('Verificando permissão (canLoad).')
         return this.checkAuthentication(route.path)
     }
 
     canActivate(activatedRoute: ActivatedRouteSnapshot, routerState: RouterStateSnapshot): boolean {
-        console.log('canActivate')
+        console.log('Verificando permissão (canActivate).')
         return this.checkAuthentication(activatedRoute.routeConfig.path)
     }
 
