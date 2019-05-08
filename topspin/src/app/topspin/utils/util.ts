@@ -1,6 +1,17 @@
 import { FormArray, FormControl, AbstractControl } from "@angular/forms";
+import { ExceptionTS } from "../models";
 
 export class Util {
+
+    static imprimeLogConsole(exibeLog: boolean, error: ExceptionTS) {
+        if (exibeLog) {
+            console.log(error);
+            console.log("LOG FOR DEVELOPER\n");
+            console.log("Código de erro: ", error._body.status);
+            console.log("URL: ", error.url);
+            console.log("Stack Trace: ", error._body.stackTrace);
+        }
+    }
 
     static converteData_ddMMyyyy_para_yyyyMMdd(data: string): string {
         let dataF = data.substring(6) + '-' +

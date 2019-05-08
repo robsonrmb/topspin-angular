@@ -13,7 +13,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/database'
 import { DashboardModule,
          UsuariosModule, 
          ConvitesModule,
-         JogosModule,
          AvaliacoesModule,
          EstatisticasModule,
          LoginModule} from './topspin/components';
@@ -43,7 +42,6 @@ import { PaginaNaoEncontradaComponent } from './topspin/components/pagina-nao-en
     ConvitesModule,
     AvaliacoesModule,
     EstatisticasModule,
-    JogosModule,
     LoginModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,

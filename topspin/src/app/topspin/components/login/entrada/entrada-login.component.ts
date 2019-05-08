@@ -6,6 +6,7 @@ import { LoginService, LoginMockService, ConviteService, AvaliacaoService } from
 import { Login, Usuario, ExceptionTS } from '../../../models';
 import { UsuarioService } from 'src/app/topspin/services/usuario.service';
 import { CONSTANTE_TOKEN } from 'src/app/topspin/constantes';
+import { Util } from 'src/app/topspin/utils/util';
 
 @Component({
   selector: 'app-entrada-login',
@@ -44,7 +45,6 @@ export class EntradaLoginComponent implements OnInit {
   entrar() {
     this.loginService.login(this.loginModel).subscribe(
       (result: string) => {
-        //console.log("chegou..." + result);
         if (result) {
           this.loginService.setUsuarioLogado(true);
           this.usuarioService
@@ -75,10 +75,8 @@ export class EntradaLoginComponent implements OnInit {
         }
       },
       (error: ExceptionTS) => {
-        let excecao = JSON.parse(error._body);
-        console.log(excecao);
-        this.mensagemErro = excecao.message;
-        this.traceDeveloper(error, excecao);
+        this.mensagemErro = error._body.msg;
+        Util.imprimeLogConsole(true, error);
       }
     )
   }
@@ -118,13 +116,6 @@ export class EntradaLoginComponent implements OnInit {
   redirecionaParaSiteExterno() {
     this.router.navigate(['/externalRedirect', {externalUrl: 'http://www.google.com'}]);
     // https://app.correiosnet.int/cas/login?service=http://localhost:4200/dashboard
-  }
-
-  private traceDeveloper(error: ExceptionTS, excecao: any) {
-    console.log("LOG FOR DEVELOPER\n");
-    console.log("Código de erro: ", excecao.status);
-    console.log("URL: ", error.url);
-    console.log(excecao.trace);
   }
 
 }

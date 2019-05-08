@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CadastroJogoComponent } from './cadastro';
+import { CadastroJogoComponent } from './cadastro/cadastro-jogo.component';
 import { Permissao } from '../../security';
 
 const jogosRoutes: Routes = [
-  {path: 'cadJogo', component: CadastroJogoComponent, canLoad: [Permissao], canActivate: [Permissao]}
-]; //cadJogo
+  {path: '', component: CadastroJogoComponent, canLoad: [Permissao], canActivate: [Permissao]}
+]; 
 
 @NgModule({
   imports: [RouterModule.forChild(jogosRoutes)],

@@ -1,7 +1,6 @@
 export * from './dashboard';
 export * from './usuarios';
 export * from './convites';
-export * from './jogos';
 export * from './avaliacoes';
 export * from './estatisticas';
 export * from './login';

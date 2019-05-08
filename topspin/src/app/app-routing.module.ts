@@ -23,9 +23,7 @@ const routes: Routes = [
   {path: 'reactive/:idAvaliado', component: CadastroReactiveComponent, canLoad: [Permissao], canActivate: [Permissao]},
   {path: 'pesqAvaliacao', component: PesquisaAvaliacaoComponent, canLoad: [Permissao], canActivate: [Permissao]},
   {path: 'pesqEstatisticas/:idUsuario', component: EstatisticasComponent, canLoad: [Permissao], canActivate: [Permissao]},
-  
-  //{path: 'cadJogo', loadChildren: './topspin/components/jogos/jogos.module#JogosModule'},
-  
+  {path: 'cadJogo', loadChildren: './topspin/components/jogos/jogos.module#JogosModule'},
   {path: 'erro-global', component: GlobalComponent},
   {path: 'externalRedirect', resolve: {url: externalURLProvider,}, component: ExternalComponent,},
 

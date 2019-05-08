@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginService, UsuarioService, EstatisticaService, JogoService, AvaliacaoService } from '../../services';
 import { Usuario, EstatisticaValor, UltimosJogos, ExceptionTS, Mensagem } from '../../models';
 import { MensagemEnum } from '../../constantes';
+import { Util } from '../../utils/util';
 
 declare var google: any;
 
@@ -78,7 +79,9 @@ export class DashboardComponent implements OnInit {
     this.buscaQtdEstatisticas();
     this.buscaQtdEstatisticas();
     this.carregaEstatisticasGerais();
-    this.carregaEstatisticasDeAvaliacao();
+    if (this.verEstatisticas) {
+      this.carregaEstatisticasDeAvaliacao();
+    }
 
     this.carregaMensagemDeAvaliacoesPendentes();
     this.carregaMensagemDeConvitesPendentes();
@@ -189,22 +192,12 @@ export class DashboardComponent implements OnInit {
         },
         (error: ExceptionTS) => {
           this.verEstatisticas = false;
-          let excecao = JSON.parse(error._body);
-          this.mensagemErro = excecao.message;
-          this.traceDeveloper(true, error, excecao);
+          this.mensagemErro = error._body.msg;
+          Util.imprimeLogConsole(true, error);
         }
       )
   }
   
-  private traceDeveloper(apenasInfo: boolean, error: ExceptionTS, excecao: any) {
-    console.log("LOG FOR DEVELOPER\n");
-    if (!apenasInfo) {
-      console.log("Código de erro: ", excecao.status);
-      console.log("URL: ", error.url);
-    }
-    console.log(excecao.trace);
-  }
-
   buscaQtdEstatisticas() {
     this.buscaQtdAvaliacoesAceitas();
     this.buscaQtdAvaliacoesRecusadas();
