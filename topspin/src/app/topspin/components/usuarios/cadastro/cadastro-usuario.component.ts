@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { Usuario, ChaveValor, Mensagem } from '../../../models';
+import { Usuario, ChaveValor, Mensagem, ExceptionTS } from '../../../models';
 import { UsuarioService } from '../../../services';
 import { ESTADOS, NIVEIS, TIPOSCD, MensagemEnum, SEXOS } from '../../../constantes';
+import { Util } from 'src/app/topspin/utils/util';
+import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
   selector: 'app-usuario',
@@ -19,7 +21,7 @@ export class CadastroUsuarioComponent implements OnInit {
   tipos: ChaveValor[];
   niveis: ChaveValor[];
   sexos: ChaveValor[];
-  mensagem: Mensagem;
+  mensagem: Mensagem = new Mensagem();
 
   constructor(private usuarioService: UsuarioService) { }
 
@@ -45,9 +47,9 @@ export class CadastroUsuarioComponent implements OnInit {
           (result) => {
             this.mensagem = new Mensagem(MensagemEnum.S, 'Usuário alterado com sucesso!!!');
           },
-          (error) => {
-            let excecao = JSON.parse(error._body);
-            this.mensagem = new Mensagem(MensagemEnum.E, excecao.msg);
+          (error: ExceptionTS) => {
+            this.mensagem = new Mensagem(MensagemEnum.E, UtilLog.buscaMensagemDoErro(error));
+            UtilLog.imprimeLogConsole(true, error);
           }
         );
   }

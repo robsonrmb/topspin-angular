@@ -3,7 +3,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 import { environment } from '../environments/environment'
@@ -36,6 +36,7 @@ import { PaginaNaoEncontradaComponent } from './topspin/components/pagina-nao-en
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     DashboardModule,
     UsuariosModule,

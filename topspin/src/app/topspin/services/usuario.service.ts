@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { throwError } from 'rxjs';
 
 //import { RECURSO_URL_AMIGOS } from '../constantes';
 import { environment } from '../../../environments/environment';
 import { Usuario } from '../models/usuario.model';
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { CONSTANTE_TOKEN } from '../constantes';
 
 @Injectable({
@@ -17,7 +16,7 @@ export class UsuarioService {
   private usuario: Usuario;
   private logado: boolean;
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   setUsuarioLogado(logado: boolean) {
     this.logado = logado;
@@ -45,14 +44,12 @@ export class UsuarioService {
   }
 
   inclui(usuario: Usuario): Observable<string> {
-    return this.http.post(`${environment.recurso_url.usuarios}/add`, usuario)
-                    .map(response => response.json())
+    return this.http.post<string>(`${environment.recurso_url.usuarios}`, usuario)
                     .catch(error => throwError(error));
   }
 
   exclui(id: string): Observable<string> {
-    return this.http.delete(`${environment.recurso_url.usuarios}/remove`, id)
-                    .map(response => response.json())
+    return this.http.delete<string>(`${environment.recurso_url.usuarios}/${id}`)
                     .catch(error => throwError(error));
   }
 
@@ -60,55 +57,45 @@ export class UsuarioService {
     let headers = new HttpHeaders();
     console.log(window.sessionStorage.getItem('token'));
     headers = headers.set('Authorization', window.sessionStorage.getItem(CONSTANTE_TOKEN))
-    return this.http.put(`${environment.recurso_url.usuarios}`, usuario)  //, {headers: headers}
-                    .map(response => true)
+    return this.http.put<boolean>(`${environment.recurso_url.usuarios}`, usuario, {headers: headers})  //, {headers: headers}
                     .catch(error => throwError(error));
   }
 
   buscaPorId(id: string): Observable<Usuario> {
-    return this.http.get(`${environment.recurso_url.usuarios}/${id}`)
-                    .map(response => response.json() as Usuario)
+    return this.http.get<Usuario>(`${environment.recurso_url.usuarios}/${id}`)
                     .catch(error => throwError(error));
   }
 
-  listaTodos() {
-    return this.http.get(`${environment.recurso_url.usuarios}`)
-                    .map(response => response.json())
+  listaTodos(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${environment.recurso_url.usuarios}`)
                     .catch(error => throwError(error));
   }
 
   buscaPorEmail(email: string): Observable<Usuario> {
-    return this.http.get(`${environment.recurso_url.usuarios}/filterEmail/${email}`)
-                    .map(response => response.json() as Usuario)
+    return this.http.get<Usuario>(`${environment.recurso_url.usuarios}/filterEmail/${email}`)
                     .catch(error => throwError(error));
     
   }
 
   listaPorEstado(estado: string, idUsuario?: string): Observable<Usuario[]> {
-    return this.http.get(`${environment.recurso_url.usuarios}/filterEstado/${estado}`)
-                    .map(response => response.json() as Usuario[])
+    return this.http.get<Usuario[]>(`${environment.recurso_url.usuarios}/filterEstado/${estado}`)
                     .catch(error => throwError(error));
   }
 
   listaPorFiltro(usuario: Usuario): Observable<Usuario[]> {
-    return this.http.post(`${environment.recurso_url.usuarios}/filter`, usuario)
-                    .map(response => response.json() as Usuario[])
+    return this.http.post<Usuario[]>(`${environment.recurso_url.usuarios}/filter`, usuario)
                     .catch(error => throwError(error));
   }
 
   listaPorFiltroComFlagAmigo(usuario: Usuario): Observable<Usuario[]> {
-    return this.http.post(`${environment.recurso_url.usuarios}/filterComFlagAmigo`, usuario)
-                    .map(response => response.json() as Usuario[])
+    return this.http.post<Usuario[]>(`${environment.recurso_url.usuarios}/filterComFlagAmigo`, usuario)
                     .catch(error => throwError(error));
   }
 
-  listaPorEstadoENome(estado: string, nome: string) {
-    /*
-    let params: new HttpParams().append('nome', nome).append('estado', estado)
-    return this.http.get(`${RECURSO_URL_USUARIOS}/filter`, {params: params})
-                    .map(response => response.json())
-                    .catch(error => throwError(error));
-    */
-  }
+  //listaPorEstadoENome(estado: string, nome: string): Observable<Usuario[]> {
+    //let params: new HttpParams().append('nome', nome).append('estado', estado)
+    //return this.http.get<Usuario[]>(`${environment.recurso_url.usuarios}/filter`, {params: params})
+    //                .catch(error => throwError(error));
+  //}
 
 }

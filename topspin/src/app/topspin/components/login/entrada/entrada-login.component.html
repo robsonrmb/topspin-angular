@@ -63,8 +63,7 @@
         </form>
       </div>
       <div class="card-footer">
-        <span class="text-dark" *ngIf="!isMensagem()">...</span>
-        <span class="text-danger" *ngIf="isMensagem()">{{mensagemErro}}</span>
+        <app-mensagens [mensagem]="mensagem"></app-mensagens>
       </div>
     </div>
   </div>

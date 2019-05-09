@@ -3,10 +3,10 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import { LoginService, LoginMockService, ConviteService, AvaliacaoService } from '../../../services';
-import { Login, Usuario, ExceptionTS } from '../../../models';
+import { Login, Usuario, ExceptionTS, Mensagem } from '../../../models';
 import { UsuarioService } from 'src/app/topspin/services/usuario.service';
-import { CONSTANTE_TOKEN } from 'src/app/topspin/constantes';
-import { Util } from 'src/app/topspin/utils/util';
+import { CONSTANTE_TOKEN, MensagemEnum } from 'src/app/topspin/constantes';
+import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
   selector: 'app-entrada-login',
@@ -17,9 +17,9 @@ export class EntradaLoginComponent implements OnInit {
 
   @ViewChild('formLogin') formLogin: NgForm;
   
-  mensagemErro: string;
   loginModel: Login;
   usuario: Usuario;
+  mensagem = new Mensagem();
 
   constructor(private loginService: LoginService,
               private usuarioService: UsuarioService,
@@ -28,7 +28,6 @@ export class EntradaLoginComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.mensagemErro = '';
     this.loginModel = new Login();
     this.loginModel.email = 'robson.rmb@gmail.com';
     this.loginModel.senha = '123';
@@ -66,17 +65,21 @@ export class EntradaLoginComponent implements OnInit {
                   this.router.navigate(['/dashboard'])
                 }, 250);
               },
-              (error) => {
-                this.mensagemErro = "Erro no processo de autenticação.";
+              (error: ExceptionTS) => {
+                this.mensagem = new Mensagem(MensagemEnum.E, UtilLog.buscaMensagemDoErro(error));
               }
             );
         } else {
-          this.mensagemErro = 'Dados incorretos!!!';
+          this.mensagem = new Mensagem(MensagemEnum.E, 'Dados incorretos!!!');
         }
       },
       (error: ExceptionTS) => {
-        this.mensagemErro = error._body.msg;
-        Util.imprimeLogConsole(true, error);
+        let msg = UtilLog.buscaMensagemDoErro(error);
+        if (msg == undefined || msg == '') {
+          msg = 'Dados inválidos!!!'
+        }
+        this.mensagem = new Mensagem(MensagemEnum.E, msg);
+        UtilLog.imprimeLogConsole(true, error);
       }
     )
   }
@@ -99,14 +102,6 @@ export class EntradaLoginComponent implements OnInit {
             window.sessionStorage.setItem('qtdConvitesPendentes', response.quantidade);
           }
         );
-  }
-
-  isMensagem() {
-    if (this.mensagemErro != undefined && this.mensagemErro != "") {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   cadastrar() {

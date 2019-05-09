@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LoginService, UsuarioService, EstatisticaService, JogoService, AvaliacaoService } from '../../services';
 import { Usuario, EstatisticaValor, UltimosJogos, ExceptionTS, Mensagem } from '../../models';
 import { MensagemEnum } from '../../constantes';
-import { Util } from '../../utils/util';
+import { UtilLog } from '../../utils/utilLog';
 
 declare var google: any;
 
@@ -15,7 +15,7 @@ declare var google: any;
 })
 export class DashboardComponent implements OnInit {
 
-  private mensagemErro: string;
+  private mensagem = new Mensagem();
   private mensagemAvalPendentes: Mensagem;
   private mensagemConvPendentes: Mensagem;
   private verEstatisticas: boolean;
@@ -71,6 +71,8 @@ export class DashboardComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.mensagem = new Mensagem();
+
     this.logado1 = this.usuarioService.isUsuarioLogado();
     this.logado2 = this.loginService.isUsuarioLogado();
     this.usuario = this.usuarioService.getUsuario();
@@ -79,9 +81,7 @@ export class DashboardComponent implements OnInit {
     this.buscaQtdEstatisticas();
     this.buscaQtdEstatisticas();
     this.carregaEstatisticasGerais();
-    if (this.verEstatisticas) {
-      this.carregaEstatisticasDeAvaliacao();
-    }
+    this.carregaEstatisticasDeAvaliacao();
 
     this.carregaMensagemDeAvaliacoesPendentes();
     this.carregaMensagemDeConvitesPendentes();
@@ -192,8 +192,8 @@ export class DashboardComponent implements OnInit {
         },
         (error: ExceptionTS) => {
           this.verEstatisticas = false;
-          this.mensagemErro = error._body.msg;
-          Util.imprimeLogConsole(true, error);
+          this.mensagem = new Mensagem(MensagemEnum.E, UtilLog.buscaMensagemDoErro(error));
+          UtilLog.imprimeLogConsole(true, error);
         }
       )
   }
