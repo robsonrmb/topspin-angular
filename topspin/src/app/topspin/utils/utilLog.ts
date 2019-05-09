@@ -3,7 +3,7 @@ import { ExceptionTS } from "../models";
 
 export class UtilLog {
 
-    static buscaMensagemDoErro(error: ExceptionTS) {
+    static buscaMensagemDoErro(error: ExceptionTS, msg?: string) {
         if (error.error) {
             if (error.error.msg) {
                 return error.error.msg;
@@ -11,7 +11,7 @@ export class UtilLog {
                 return error.message;
             }
         }else{
-            return '';
+            return msg;
         }
     }
     

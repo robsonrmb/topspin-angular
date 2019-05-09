@@ -74,10 +74,7 @@ export class EntradaLoginComponent implements OnInit {
         }
       },
       (error: ExceptionTS) => {
-        let msg = UtilLog.buscaMensagemDoErro(error);
-        if (msg == undefined || msg == '') {
-          msg = 'Dados inválidos!!!'
-        }
+        let msg = UtilLog.buscaMensagemDoErro(error, 'Dados Inválidos');
         this.mensagem = new Mensagem(MensagemEnum.E, msg);
         UtilLog.imprimeLogConsole(true, error);
       }

@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Convite, ChaveValor, Usuario, Mensagem } from '../../../models';
+import { Convite, ChaveValor, Usuario, Mensagem, ExceptionTS } from '../../../models';
 import { PERIODOS, MensagemEnum } from '../../../constantes';
 import { ConviteService, UsuarioService } from '../../../services';
+import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
   selector: 'app-cadastro-convite',
@@ -30,7 +31,8 @@ export class CadastroConviteComponent implements OnInit {
           (result) => {
             this.convidado = result
             this.mensagem = new Mensagem()
-          }
+          },
+          (error) => {}
         )
     
     this.mensagem = new Mensagem()
@@ -49,8 +51,10 @@ export class CadastroConviteComponent implements OnInit {
             //this.mensagem = new Mensagem(MensagemEnum.S, 'Convite salvo com sucesso!!!')
             this.router.navigate(['/listaAmigos'])
           },
-          (error) => {
-            this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao convidar usuário para jogar!!!')
+          (error: ExceptionTS) => {
+            let msg = UtilLog.buscaMensagemDoErro(error, 'Erro ao incluir convite.');
+            this.mensagem = new Mensagem(MensagemEnum.E, msg);
+            UtilLog.imprimeLogConsole(true, error);
           }
         )
   }
