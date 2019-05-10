@@ -1,9 +1,9 @@
-import { FormArray, FormControl, AbstractControl } from "@angular/forms";
 import { ExceptionTS } from "../models";
 
 export class UtilLog {
 
     static buscaMensagemDoErro(error: ExceptionTS, msg?: string) {
+        console.log('### ', error);
         if (error.error) {
             if (error.error.msg) {
                 return error.error.msg;

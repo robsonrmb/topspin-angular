@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
-import { Usuario, ChaveValor, Avaliacao, Mensagem } from 'src/app/topspin/models';
+import { Usuario, ChaveValor, Avaliacao, Mensagem, ExceptionTS } from 'src/app/topspin/models';
 import { AvaliacaoService, UsuarioService } from '../../../services';
 import { ESTADOS, RESPOSTAS_PERFORMANCE, MensagemEnum } from '../../../constantes';
+import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
   selector: 'app-cadastro-avaliacao',
@@ -42,16 +43,16 @@ export class CadastroAvaliacaoComponent implements OnInit {
                   .subscribe(
                     (result) => {
                       this.carregaUsuarios(result)
-                    }
+                    },(error) => {}
                   );
-            }
-          )
+            },(error) => {}
+          );
     
     }
 
     this.avaliacao = new Avaliacao();
     this.estados = ESTADOS;
-    this.respostas = RESPOSTAS_PERFORMANCE ;
+    this.respostas = RESPOSTAS_PERFORMANCE;
   }
 
   private carregaUsuarios(listaDeUsuarios: Usuario[]) {
@@ -71,7 +72,11 @@ export class CadastroAvaliacaoComponent implements OnInit {
               // this.mensagem = new Mensagem(MensagemEnum.S, 'Avaliação salva com sucesso!!!')
               this.router.navigate(['dashboard']);
             },
-            (error) => this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao incluir avaliação!!!')
+            (error: ExceptionTS) => {
+              let msg = UtilLog.buscaMensagemDoErro(error, 'Erro ao incluir avaliação.');
+              this.mensagem = new Mensagem(MensagemEnum.E, msg);
+              UtilLog.imprimeLogConsole(true, error);
+            }
           );
     }
   }
@@ -119,7 +124,7 @@ export class CadastroAvaliacaoComponent implements OnInit {
         .subscribe(
           (result) => {
             this.carregaUsuarios(result)
-          }
+          },(error) => {}
         )
     this.avaliacao.idAvaliado = ''
   }

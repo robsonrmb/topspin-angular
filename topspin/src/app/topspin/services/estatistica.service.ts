@@ -28,7 +28,7 @@ export class EstatisticaService {
   }
 
   visualizaEstatisticas(idUsuario: string) {
-    return this.http.get(`${environment.recurso_url.estatisticas}/visualiza-estatisticas/usuario/${idUsuario}`)
+    return this.http.get(`${environment.recurso_url.estatisticas}/visualiza-estatisticas/usuarioi/${idUsuario}`)
                     .map(response => response.json())
                     .catch(error => throwError(error));
   }

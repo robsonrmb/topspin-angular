@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Avaliacao, ChaveValor, Mensagem, AvaliacaoArea, Usuario, AvaliacaoResult, AvaliacaoTipo } from 'src/app/topspin/models';
+import { Avaliacao, ChaveValor, Mensagem, AvaliacaoArea, Usuario, AvaliacaoResult, AvaliacaoTipo, ExceptionTS } from 'src/app/topspin/models';
 import { AvaliacaoService, UsuarioService } from 'src/app/topspin/services';
-import { ESTADOS, RESPOSTAS_PERFORMANCE } from 'src/app/topspin/constantes';
+import { ESTADOS, RESPOSTAS_PERFORMANCE, MensagemEnum } from 'src/app/topspin/constantes';
+import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
   selector: 'app-avalie',
@@ -45,7 +46,8 @@ export class AvalieComponent implements OnInit {
                       this.carregaUsuarios(result)
                     }
                   )
-            }
+            },
+            (error) => {}
           );
      
       this.mensagem = new Mensagem();
@@ -62,7 +64,11 @@ export class AvalieComponent implements OnInit {
         }
         */
       },
-      (error) => console.log('Erro ao listar as avaliações!!!')
+      (error: ExceptionTS) => {
+        let msg = UtilLog.buscaMensagemDoErro(error, 'Erro ao listar as áreas das avaliações.');
+        this.mensagem = new Mensagem(MensagemEnum.E, msg);
+        UtilLog.imprimeLogConsole(true, error);
+      }
     );
 
     this.avaliacao = new Avaliacao();
@@ -99,7 +105,11 @@ export class AvalieComponent implements OnInit {
             //this.mensagem = new Mensagem(MensagemEnum.S, 'Avaliação salva com sucesso!!!')
             this.router.navigate(['dashboard'])
           },
-          (error) => console.log('Erro ao incluir avaliação!!!')
+          (error: ExceptionTS) => {
+            let msg = UtilLog.buscaMensagemDoErro(error, 'Erro ao incluir avaliação.');
+            this.mensagem = new Mensagem(MensagemEnum.E, msg);
+            UtilLog.imprimeLogConsole(true, error);
+          }
         );
   }
 
@@ -129,9 +139,9 @@ export class AvalieComponent implements OnInit {
         .subscribe(
           (result) => {
             this.carregaUsuarios(result)
-          }
+          },
+          (error) => {}
         );
     this.avaliacao.idAvaliado = ""
   }
-
 }

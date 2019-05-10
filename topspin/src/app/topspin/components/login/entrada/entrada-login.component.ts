@@ -87,7 +87,8 @@ export class EntradaLoginComponent implements OnInit {
         .subscribe(
           (response) => {
             window.sessionStorage.setItem('qtdAvaliacoesPendentes', response.quantidade)
-          }
+          },
+          (error) => {}
         );
   }
 
@@ -97,7 +98,8 @@ export class EntradaLoginComponent implements OnInit {
         .subscribe(
           (response) => {
             window.sessionStorage.setItem('qtdConvitesPendentes', response.quantidade);
-          }
+          },
+          (error) => {}
         );
   }
 

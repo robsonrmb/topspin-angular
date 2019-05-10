@@ -2,9 +2,10 @@ import { Component, OnInit, ContentChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControlName, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Mensagem, Avaliacao, ChaveValor, Usuario } from 'src/app/topspin/models';
+import { Mensagem, Avaliacao, ChaveValor, Usuario, ExceptionTS } from 'src/app/topspin/models';
 import { UsuarioService, AvaliacaoService } from 'src/app/topspin/services';
 import { ESTADOS, MensagemEnum } from 'src/app/topspin/constantes';
+import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
   selector: 'app-cadastro-reactive',
@@ -50,9 +51,9 @@ export class CadastroReactiveComponent implements OnInit {
                   .subscribe(
                     (result) => {
                       this.carregaUsuarios(result)
-                    }
+                    }, (error) => {}
                   );
-            }
+            },(error) => {}
           )
     }
     
@@ -72,7 +73,7 @@ export class CadastroReactiveComponent implements OnInit {
         .subscribe(
           (result) => {
             this.carregaUsuarios(result);
-          }
+          },(error) => {}
         );
     this.avaliacao.idAvaliado = '';
   }
@@ -111,7 +112,11 @@ export class CadastroReactiveComponent implements OnInit {
               //this.mensagem = new Mensagem(MensagemEnum.S, 'Avaliação salva com sucesso!!!')
               this.router.navigate(['dashboard'])
             },
-            (error) => this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao incluir avaliação!!!')
+            (error: ExceptionTS) => {
+              let msg = UtilLog.buscaMensagemDoErro(error, 'Erro ao incluir avaliação.');
+              this.mensagem = new Mensagem(MensagemEnum.E, msg);
+              UtilLog.imprimeLogConsole(true, error);
+            }
           )
     }
   }

@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Avaliacao, Mensagem } from '../../../models';
+import { Avaliacao, Mensagem, ExceptionTS } from '../../../models';
 import { AvaliacaoService, UsuarioService } from '../../../services';
 import { MensagemEnum } from 'src/app/topspin/constantes';
+import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
   selector: 'app-pesquisa-avaliacao',
@@ -37,8 +38,7 @@ export class PesquisaAvaliacaoComponent implements OnInit {
           if (this.listaDeAvaliacoes == undefined || this.listaDeAvaliacoes.length == 0) {
             this.mensagem = new Mensagem(MensagemEnum.W, 'Nenhuma avaliação encontrada!!!');
           }
-          
-        }
+        },(error) => {}
       );
   }
 
@@ -51,7 +51,11 @@ export class PesquisaAvaliacaoComponent implements OnInit {
           this.avaliacaoService.atualizaQtdDeAvaliacoesPendentes();
           this.router.navigate(['dashboard']);
         },
-        (error) => this.mensagem = new Mensagem(MensagemEnum.S, 'Erro ao confirmar avaliação!!!')
+        (error: ExceptionTS) => {
+          let msg = UtilLog.buscaMensagemDoErro(error, 'Erro ao confirmar avaliação.');
+          this.mensagem = new Mensagem(MensagemEnum.E, msg);
+          UtilLog.imprimeLogConsole(true, error);
+        }
       );
   }
 
@@ -64,7 +68,11 @@ export class PesquisaAvaliacaoComponent implements OnInit {
           this.avaliacaoService.atualizaQtdDeAvaliacoesPendentes();
           this.router.navigate(['dashboard'])
         },
-        (error) => this.mensagem = new Mensagem(MensagemEnum.S, 'Erro ao recusar avaliação!!!')
+        (error: ExceptionTS) => {
+          let msg = UtilLog.buscaMensagemDoErro(error, 'Erro ao recusar avaliação.');
+          this.mensagem = new Mensagem(MensagemEnum.E, msg);
+          UtilLog.imprimeLogConsole(true, error);
+        }
       );
   }
 

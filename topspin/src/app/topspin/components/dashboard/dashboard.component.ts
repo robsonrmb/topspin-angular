@@ -191,6 +191,7 @@ export class DashboardComponent implements OnInit {
           this.verEstatisticas = result
         },
         (error: ExceptionTS) => {
+          console.log(error);
           this.verEstatisticas = false;
           this.mensagem = new Mensagem(MensagemEnum.E, UtilLog.buscaMensagemDoErro(error));
           UtilLog.imprimeLogConsole(true, error);
