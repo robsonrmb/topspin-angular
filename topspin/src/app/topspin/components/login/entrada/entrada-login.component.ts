@@ -85,8 +85,8 @@ export class EntradaLoginComponent implements OnInit {
     this.avaliacaoService
         .countAvaliacoesPendentes(idUsuario)
         .subscribe(
-          (response) => {
-            window.sessionStorage.setItem('qtdAvaliacoesPendentes', response.quantidade)
+          (result) => {
+            window.sessionStorage.setItem('qtdAvaliacoesPendentes', result.quantidade.toString())
           },
           (error) => {}
         );
@@ -96,8 +96,8 @@ export class EntradaLoginComponent implements OnInit {
     this.conviteService
         .countConvitesPendentes(idUsuario)
         .subscribe(
-          (response) => {
-            window.sessionStorage.setItem('qtdConvitesPendentes', response.quantidade);
+          (result) => {
+            window.sessionStorage.setItem('qtdConvitesPendentes', result.quantidade.toString());
           },
           (error) => {}
         );

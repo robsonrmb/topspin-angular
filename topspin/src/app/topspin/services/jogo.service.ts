@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { throwError } from 'rxjs';
 
@@ -12,17 +12,16 @@ import { environment } from '../../../environments/environment';
 })
 export class JogoService {
 
-  constructor(private http: Http) { }
+  constructor(private http: HttpClient) { }
 
   inclui(jogo: Jogo): Observable<boolean> {
-    return this.http.post(`${environment.recurso_url.jogos}/add`, jogo)
+    return this.http.post<boolean>(`${environment.recurso_url.jogos}`, jogo)
                     .map(response => true)
                     .catch(error => throwError(error));
   }
 
   listaUltimosJogosPorUsuario(id: string, qtd: number): Observable<UltimosJogos> {
-    return this.http.get(`${environment.recurso_url.jogos}/ultimos-jogos?usuario=${id}&&qtd=${qtd}`)
-                    .map(response => response.json())
+    return this.http.get<UltimosJogos>(`${environment.recurso_url.jogos}/ultimos-jogos?usuario=${id}&&qtd=${qtd}`)
                     .catch(error => throwError(error));
   }
 

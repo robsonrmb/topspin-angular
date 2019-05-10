@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { throwError } from 'rxjs';
 
 //import { RECURSO_URL_AVALIACOES } from '../constantes';
 import { environment } from '../../../environments/environment';
-import { Avaliacao, AvaliacaoArea, AvaliacaoResult } from '../models';
-import { HttpClient } from '@angular/common/http';
-import { Valor } from '../models/valor.model';
+import { Avaliacao, AvaliacaoArea, AvaliacaoResult, Quantidade } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -55,8 +54,8 @@ export class AvaliacaoService {
                     .catch(error => throwError(error));
   }
 
-  countAvaliacoesPendentes(idUsuario: string): Observable<Valor> {
-    return this.http.get<Valor>(`${environment.recurso_url.avaliacoes}/recebidas/pendentes/qtd/${idUsuario}`)
+  countAvaliacoesPendentes(idUsuario: string): Observable<Quantidade> {
+    return this.http.get<Quantidade>(`${environment.recurso_url.avaliacoes}/recebidas/pendentes/qtd/${idUsuario}`)
                     .catch(error => throwError(error));
   }
 

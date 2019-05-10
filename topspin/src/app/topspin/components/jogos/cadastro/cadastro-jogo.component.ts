@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ɵConsole } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { Jogo, ChaveValor, Mensagem } from '../../../models';
+import { Jogo, ChaveValor, Mensagem, ExceptionTS } from '../../../models';
 import { TIPOSJOGO, RESULTADOS, PLACARES, MensagemEnum } from '../../../constantes';
 import { UsuarioService, JogoService } from '../../../services';
 import { take, tap } from 'rxjs/operators';
+import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
   selector: 'app-cadastro-jogo',
@@ -35,7 +36,6 @@ export class CadastroJogoComponent implements OnInit {
   }
 
   salvar(form: NgForm) {
-    //console.log(form)
     let msg = this.validaFormulario();
     this.jogo.data = this.converteData_ddMMyyyy_para_yyyyMMdd(this.jogo.dataJogoFormatada);
     if (msg == "") {
@@ -49,7 +49,11 @@ export class CadastroJogoComponent implements OnInit {
             (result) => {
               this.mensagem = new Mensagem(MensagemEnum.S, 'Jogo incluído com sucesso!!!')
             },
-            (error) => this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao incluir jogo.')
+            (error: ExceptionTS) => {
+              let msg = UtilLog.buscaMensagemDoErro(error, 'Erro ao incluir jogo.');
+              this.mensagem = new Mensagem(MensagemEnum.E, msg);
+              UtilLog.imprimeLogConsole(true, error);
+            }
           );
     } else {
       this.mensagem = new Mensagem(MensagemEnum.E, msg);

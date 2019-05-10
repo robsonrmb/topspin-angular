@@ -188,10 +188,9 @@ export class DashboardComponent implements OnInit {
       .visualizaEstatisticas(this.usuarioService.getUsuario().id)
       .subscribe(
         (result) => {
-          this.verEstatisticas = result
+          this.verEstatisticas = result;
         },
         (error: ExceptionTS) => {
-          console.log(error);
           this.verEstatisticas = false;
           this.mensagem = new Mensagem(MensagemEnum.E, UtilLog.buscaMensagemDoErro(error));
           UtilLog.imprimeLogConsole(true, error);
@@ -212,8 +211,8 @@ export class DashboardComponent implements OnInit {
     this.estatisticaService
       .buscaQtdAvaliacoesAceitas(this.usuarioService.getUsuario().id)
       .subscribe(
-        (result) => {
-          this.qtdAvaliacoesAceitas = result.valor1
+        (eValor: EstatisticaValor) => {
+          this.qtdAvaliacoesAceitas = eValor.valor1
         }
       );
   }
@@ -222,8 +221,8 @@ export class DashboardComponent implements OnInit {
     this.estatisticaService
       .buscaQtdAvaliacoesRecusadas(this.usuarioService.getUsuario().id)
       .subscribe(
-        (result) => {
-          this.qtdAvaliacoesRecusadas = result.valor1
+        (eValor: EstatisticaValor) => {
+          this.qtdAvaliacoesRecusadas = eValor.valor1
         }
       );
   }
@@ -232,8 +231,8 @@ export class DashboardComponent implements OnInit {
     this.estatisticaService
       .buscaQtdConvitesRecebidosAceitos(this.usuarioService.getUsuario().id)
       .subscribe(
-        (result) => {
-          this.qtdConvitesRecebidosAceitos = result.valor1
+        (eValor: EstatisticaValor) => {
+          this.qtdConvitesRecebidosAceitos = eValor.valor1
         }
       );
   }
@@ -242,8 +241,8 @@ export class DashboardComponent implements OnInit {
     this.estatisticaService
       .buscaQtdConvitesRecebidosRecusados(this.usuarioService.getUsuario().id)
       .subscribe(
-        (result) => {
-          this.qtdConvitesRecebidosRecusados = result.valor1
+        (eValor: EstatisticaValor) => {
+          this.qtdConvitesRecebidosRecusados = eValor.valor1
         }
       );
   }
@@ -252,8 +251,8 @@ export class DashboardComponent implements OnInit {
     this.estatisticaService
       .buscaQtdConvitesEnviados(this.usuarioService.getUsuario().id)
       .subscribe(
-        (result) => {
-          this.qtdConvitesEnviados = result.valor1
+        (eValor: EstatisticaValor) => {
+          this.qtdConvitesEnviados = eValor.valor1
         }
       );
   }
@@ -262,8 +261,8 @@ export class DashboardComponent implements OnInit {
     this.estatisticaService
       .buscaQtdJogosRealizados(this.usuarioService.getUsuario().id)
       .subscribe(
-        (result) => {
-          this.qtdJogosRealizados = result.valor1
+        (eValor: EstatisticaValor) => {
+          this.qtdJogosRealizados = eValor.valor1
         }
       );
   }
@@ -282,8 +281,8 @@ export class DashboardComponent implements OnInit {
     this.estatisticaService
       .buscaEstatisticaDeVitoriasEDerrotas(this.usuarioService.getUsuario().id)
       .subscribe(
-        (result) => {
-          this.eVitoriaDerrota = result;
+        (eValor: EstatisticaValor) => {
+          this.eVitoriaDerrota = eValor;
           this.arVitoriaDerrota[0] = ['Vitórias', this.eVitoriaDerrota.valor1];
           this.arVitoriaDerrota[1] = ['Derrotas', this.eVitoriaDerrota.valor2];
           
@@ -295,8 +294,8 @@ export class DashboardComponent implements OnInit {
     this.estatisticaService
       .buscaEstatisticaDeTiebreaks(this.usuarioService.getUsuario().id)
       .subscribe(
-        (result) => {
-          this.eTiebreaks = result;
+        (eValor: EstatisticaValor) => {
+          this.eTiebreaks = eValor;
           this.arTie[0] = ['Vencidos', this.eTiebreaks.valor1];
           this.arTie[1] = ['Perdidos', this.eTiebreaks.valor2];
           

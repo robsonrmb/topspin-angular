@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { Usuario, FormUsuarioAmigo, Mensagem } from '../../../models';
+import { Usuario, FormUsuarioAmigo, Mensagem, ExceptionTS } from '../../../models';
 import { AmigoService, UsuarioService } from '../../../services';
 import { Router } from '@angular/router';
 import { MensagemEnum } from 'src/app/topspin/constantes';
+import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
   selector: 'app-amigo',
@@ -32,7 +33,7 @@ export class AmigoComponent implements OnInit {
           if (this.listaDeAmigos !== undefined && this.listaDeAmigos.length > 0) {
             this.mensagem = new Mensagem();
           }
-        }
+        },(error) => {}
       );
       this.mensagem = new Mensagem();
   }
@@ -46,8 +47,10 @@ export class AmigoComponent implements OnInit {
             this.retiraUsuarioDaLista(u.id);
             this.mensagem = new Mensagem(MensagemEnum.S, 'Usuário retirado da lista de amigos com sucesso!!!');
           },
-          (error) => {
-            this.mensagem = new Mensagem(MensagemEnum.E, 'Erro ao retirar usuário como amigo!!!');
+          (error: ExceptionTS) => {
+            let msg = UtilLog.buscaMensagemDoErro(error, 'Erro ao retirar usuário como amigo.');
+            this.mensagem = new Mensagem(MensagemEnum.E, msg);
+            UtilLog.imprimeLogConsole(true, error);
           }
         );
   }
