@@ -10,6 +10,13 @@ export class UtilLog {
         }else{
             return msg;
         }
+        /*
+        if (e.error) {// Se existe a propriedade error (exceção angular)
+            return e.error.message;       
+        }else{
+            return msg;
+        }
+        */
     }
     
     static imprimeLogConsole(exibeLog: boolean, error: any) {

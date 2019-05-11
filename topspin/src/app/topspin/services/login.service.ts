@@ -27,22 +27,31 @@ export class LoginService {
     this.logado = valor;
   }
 
+  // UTILIZANDO O HTTP (MODO ANTIGO)
   login(loginModel: Login): Observable<string> {
     return this.http.post(`${environment.recurso_url.login}`, loginModel)
-                    .map(response => response.headers.get('Authorization'))
+                    .map(response => response.headers.get('Authorization')) 
                     .catch(error => throwError(error));
   }
+  
+  /*
+  // UTILIZANDO O HTTPCLIENT (MODO NOVO)
+  loginUser(loginModel: Login): Observable<any> {
+    return this.httpClient.post<any>(`${environment.recurso_url.login}`, loginModel)
+                    .catch(error => throwError(error));
+  }
+  */
 
   logout() {
     this.logado = false;
   }
-
+  /* método colocado no UsuarioService
   inclui(formCadastroLoginModel: FormCadastroLogin): Observable<boolean> {
-    return this.http.post(`${environment.recurso_url.usuarios}`, formCadastroLoginModel)
+    return this.httpClient.post(`${environment.recurso_url.usuarios}`, formCadastroLoginModel)
                     .map(response => true)
                     .catch(error => throwError(error));
   }
-
+  */
   handleLogin(path: string = this.lastUrl) {
     this.router.navigate(['/login']);
   }

@@ -2,7 +2,7 @@
     <div class="row">
       <div class="col-12">
         <nav class="navbar fixed-top navbar-primary bg-primary"><!-- style="background-color: #123123 -->
-          <a class="navbar-brand text-light" [routerLink]="['login']" href="javascript: return false;">
+          <a class="navbar-brand text-light" [routerLink]="['/login']" href="javascript: return false;">
             <img src="../../../../assets/images/web_hi_res_512.png" style="width: 40; height: 40px;" />
             TopSpin
           </a>
@@ -103,8 +103,7 @@
           </form>
         </div>
         <div class="card-footer">
-          <span class="text-dark" *ngIf="!isMensagem()">...</span>
-          <span class="text-danger" *ngIf="isMensagem()">{{mensagemErro}}</span>
+          <app-mensagens [mensagem]="mensagem"></app-mensagens>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import { Usuario } from '../models/usuario.model';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { CONSTANTE_TOKEN } from '../constantes';
+import { FormCadastroLogin } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +44,8 @@ export class UsuarioService {
     return this.usuario;
   }
 
-  inclui(usuario: Usuario): Observable<string> {
-    return this.http.post<string>(`${environment.recurso_url.usuarios}`, usuario)
+  inclui(formCadastroLoginModel: FormCadastroLogin): Observable<string> {
+    return this.http.post<string>(`${environment.recurso_url.usuarios}`, formCadastroLoginModel)
                     .catch(error => throwError(error));
   }
 

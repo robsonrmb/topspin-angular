@@ -43,7 +43,7 @@ export class EntradaLoginComponent implements OnInit {
 
   entrar() {
     this.loginService.login(this.loginModel).subscribe(
-      (result: string) => {
+      (result) => {
         if (result) {
           this.loginService.setUsuarioLogado(true);
           this.usuarioService
@@ -73,10 +73,8 @@ export class EntradaLoginComponent implements OnInit {
           this.mensagem = new Mensagem(MensagemEnum.E, 'Dados incorretos!!!');
         }
       },
-      (error: ExceptionTS) => {
-        let msg = UtilLog.buscaMensagemDoErro(error, 'Dados Inválidos');
-        this.mensagem = new Mensagem(MensagemEnum.E, msg);
-        UtilLog.imprimeLogConsole(true, error);
+      (error) => {
+        this.mensagem = new Mensagem(MensagemEnum.E, 'Dados Inválidos.');
       }
     )
   }

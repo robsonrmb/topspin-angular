@@ -13,6 +13,8 @@
 
 # Pendências
 
-# Tratamento de erros e HttpClient
+# Tratamento de erros e HttpClient - feito
 # Token - login
 # desinscrever nos observables - seguir JOGOS
+# Esqueci minha senha
+# Refresh token
