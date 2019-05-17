@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 
 import { LoginService, UsuarioService } from "../../services";
+import { CONSTANTE_TOKEN } from "../../constantes";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -15,27 +16,14 @@ export class AuthInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         
-        console.log('Interceptando ...', request);
-        /*
-        const loginService = this.injector.get(LoginService);
-        if (!loginService.isUsuarioLogado()) {
-            if (window.sessionStorage.getItem('usuarioLogado') == 'S') {
-                
-                const usuarioService = this.injector.get(UsuarioService);
-                usuarioService.buscaPorEmail(window.sessionStorage.getItem('emailUsuario'))
-                    .subscribe(
-                        (response) => {
-                            usuarioService.setUsuarioLogado(true)
-                            usuarioService.setUsuario(response)
-                        },
-                        (error) => {
-                            this.mensagemErro = "Erro no processo de autenticação."
-                            this.router.navigate(['/login'])
-                    });
-            }
+        if (window.sessionStorage.getItem(CONSTANTE_TOKEN)) {
+            console.log('clonando...');
+            const requestAuth = request.clone({headers: request.headers.set('Authorization', window.sessionStorage.getItem(CONSTANTE_TOKEN))});
+            console.log('RequestAuth...', requestAuth);
+            return next.handle(requestAuth);
+        }else{
+            return next.handle(request);
         }
-        */
-        return next.handle(request);
     }
 
 }

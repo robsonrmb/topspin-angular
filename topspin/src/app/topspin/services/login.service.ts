@@ -7,6 +7,7 @@ import { throwError } from 'rxjs';
 //import { RECURSO_URL_AMIGOS } from '../constantes';
 import { environment } from '../../../environments/environment';
 import { Login, FormCadastroLogin } from '../models';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,30 +18,32 @@ export class LoginService {
   lastUrl: string;
 
   constructor(private http: Http,
+              private httpClient: HttpClient,
               private router: Router) { }
-
-  isUsuarioLogado(): boolean {
-    return this.logado;
-  }
-
-  setUsuarioLogado(valor: boolean) {
-    this.logado = valor;
-  }
 
   // UTILIZANDO O HTTP (MODO ANTIGO)
   login(loginModel: Login): Observable<string> {
     return this.http.post(`${environment.recurso_url.login}`, loginModel)
                     .map(response => response.headers.get('Authorization')) 
                     .catch(error => throwError(error));
-  }
+  }  
   
-  /*
   // UTILIZANDO O HTTPCLIENT (MODO NOVO)
   loginUser(loginModel: Login): Observable<any> {
+    return this.httpClient.post(`${environment.recurso_url.login}`, 
+                           loginModel, 
+                           {
+                             observe: 'response',
+                             responseType: 'text'
+                           })
+                    .catch(error => throwError(error));
+  }
+
+  // UTILIZANDO O HTTPCLIENT (MODO NOVO)
+  loginUser_(loginModel: Login): Observable<any> {
     return this.httpClient.post<any>(`${environment.recurso_url.login}`, loginModel)
                     .catch(error => throwError(error));
   }
-  */
 
   logout() {
     this.logado = false;
@@ -54,6 +57,14 @@ export class LoginService {
   */
   handleLogin(path: string = this.lastUrl) {
     this.router.navigate(['/login']);
+  }
+
+  isUsuarioLogado(): boolean {
+    return this.logado;
+  }
+
+  setUsuarioLogado(valor: boolean) {
+    this.logado = valor;
   }
 
 }

@@ -39,12 +39,14 @@ export class EntradaLoginComponent implements OnInit {
     window.sessionStorage.removeItem('nomeUsuario');
     window.sessionStorage.removeItem('qtdAvaliacoesPendentes');
     window.sessionStorage.removeItem('qtdConvitesPendentes');
+    window.sessionStorage.removeItem(CONSTANTE_TOKEN);
   }
 
   entrar() {
-    this.loginService.login(this.loginModel).subscribe(
-      (result) => {
-        if (result) {
+    this.loginService.loginUser(this.loginModel).subscribe(
+      (response_) => {
+        let token_: string = response_.headers.get('Authorization');
+        if (response_) {
           this.loginService.setUsuarioLogado(true);
           this.usuarioService
             .buscaPorEmail(this.loginModel.email)
@@ -54,7 +56,7 @@ export class EntradaLoginComponent implements OnInit {
                 window.sessionStorage.setItem('idUsuario', response.id);
                 window.sessionStorage.setItem('emailUsuario', response.email);
                 window.sessionStorage.setItem('nomeUsuario', response.nome);
-                window.sessionStorage.setItem(CONSTANTE_TOKEN, result);
+                window.sessionStorage.setItem(CONSTANTE_TOKEN, token_);
 
                 this.usuarioService.setUsuarioLogado(true);
                 this.usuarioService.setUsuario(response);

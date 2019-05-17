@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { throwError } from 'rxjs';
 
 //import { RECURSO_URL_CONVITES } from '../constantes';
 import { environment } from '../../../environments/environment';
 import { Convite, Quantidade } from '../models';
+import { CONSTANTE_TOKEN } from '../constantes';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,10 @@ export class ConviteService {
   constructor(private http: HttpClient) { }
 
   inclui(convite: Convite): Observable<boolean> {
-    return this.http.post<boolean>(`${environment.recurso_url.convites}`, convite)
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', window.sessionStorage.getItem(CONSTANTE_TOKEN));
+
+    return this.http.post<boolean>(`${environment.recurso_url.convites}`, convite) //, {headers: headers}
                     .map(response => true)
                     .catch(error => throwError(error));
   }
