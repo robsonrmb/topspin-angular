@@ -7,6 +7,7 @@ import { Login, Usuario, ExceptionTS, Mensagem } from '../../../models';
 import { UsuarioService } from 'src/app/topspin/services/usuario.service';
 import { CONSTANTE_TOKEN, MensagemEnum } from 'src/app/topspin/constantes';
 import { UtilLog } from 'src/app/topspin/utils/utilLog';
+import { AuthService } from 'src/app/topspin/services/auth.service';
 
 @Component({
   selector: 'app-entrada-login',
@@ -20,11 +21,14 @@ export class EntradaLoginComponent implements OnInit {
   loginModel: Login;
   usuario: Usuario;
   mensagem = new Mensagem();
+  mensagemModal = new Mensagem();
+  emailNovaSenha: string;
 
   constructor(private loginService: LoginService,
               private usuarioService: UsuarioService,
               private conviteService: ConviteService,
               private avaliacaoService: AvaliacaoService,
+              private authService: AuthService,
               private router: Router) { }
 
   ngOnInit() {
@@ -105,6 +109,33 @@ export class EntradaLoginComponent implements OnInit {
 
   cadastrar() {
     this.router.navigate(['/cadastroLogin']);
+  }
+
+  gerarNovaSenha() {
+    let msg = this.validaFormulario();
+    if (msg == '') {
+      this.authService
+        .gerarNovaSenha(this.emailNovaSenha)
+        .subscribe(
+          (result) => {
+            this.mensagemModal = new Mensagem(MensagemEnum.S, msg);
+          },
+          (error: ExceptionTS) => {
+            this.mensagemModal = new Mensagem(MensagemEnum.E, UtilLog.buscaMensagemDoErro(error));
+            UtilLog.imprimeLogConsole(true, error);
+          }
+        );
+    } else {
+      this.mensagemModal = new Mensagem(MensagemEnum.E, msg);
+    }
+  }
+
+  private validaFormulario(): string {
+    let mensagemModal: string = '';
+    if (this.emailNovaSenha == undefined || this.emailNovaSenha.trim() == '') {
+      mensagemModal = 'Email inválido.';
+    }
+    return mensagemModal;
   }
 
   redirecionaParaSiteExterno() {

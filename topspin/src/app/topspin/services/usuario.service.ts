@@ -8,6 +8,7 @@ import { Usuario } from '../models/usuario.model';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { CONSTANTE_TOKEN } from '../constantes';
 import { FormCadastroLogin } from '../models';
+import { UserPassDTO } from '../models/dto/userpass.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ import { FormCadastroLogin } from '../models';
 export class UsuarioService {
 
   private usuario: Usuario;
+  private userPassDTO: UserPassDTO;
   private logado: boolean;
 
   constructor(private http: HttpClient) { }
@@ -56,9 +58,15 @@ export class UsuarioService {
 
   altera(usuario: Usuario): Observable<boolean> {
     let headers = new HttpHeaders();
-    console.log(window.sessionStorage.getItem('token'));
     headers = headers.set('Authorization', window.sessionStorage.getItem(CONSTANTE_TOKEN))
-    return this.http.put<boolean>(`${environment.recurso_url.usuarios}`, usuario, {headers: headers})  //, {headers: headers}
+    return this.http.put<boolean>(`${environment.recurso_url.usuarios}`, usuario)  //, {headers: headers}
+                    .catch(error => throwError(error));
+  }
+
+  atualizaSenha(userPassDTO: UserPassDTO): Observable<boolean> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Authorization', window.sessionStorage.getItem(CONSTANTE_TOKEN))
+    return this.http.put<boolean>(`${environment.recurso_url.usuarios}/atualizaSenha`, userPassDTO)  //, {headers: headers}
                     .catch(error => throwError(error));
   }
 

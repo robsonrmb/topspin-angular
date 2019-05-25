@@ -1,182 +1,253 @@
 <div class="content-wrapper">
-    <div class="container-fluid">
-  
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="javascript: return false;">Home</a>
-        </li>
-        <li class="breadcrumb-item">
-          Dados cadastrais - <a [routerLink]="['/cadastreUsuario']">Formulário reactive</a>
-        </li>
-      </ol>
+  <div class="container-fluid">
+
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="javascript: return false;">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        Dados cadastrais - <a [routerLink]="['/cadastreUsuario']">Formulário reactive</a>
+      </li>
+    </ol>
+    
+    <div class="col-12"> 
+        
+      <!-- conteúdo da página -->
+      <form #formUsuarios="ngForm" novalidate>
+
+        <h4>DADOS CADASTRAIS</h4>
+
+        <app-mensagens [mensagem]="mensagem"></app-mensagens>
+
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label form="email">Email (*)</label>
+              <input  name="email" 
+                      id="email" 
+                      disabled="true"
+                      [(ngModel)]="usuario.email"
+                      #email="ngModel"
+                      class="form-control" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label form="nome">Nome (*)</label>
+              <input  name="nome" 
+                      id="nome" 
+                      [(ngModel)]="usuario.nome"
+                      #nome="ngModel"
+                      class="form-control" 
+                      placeholder="Informe seu nome"
+                      required />
+            </div>
+          </div>
+          <div class="col-4">  
+            <div class="form-group">
+              <label form="apelido">Apelido</label>
+              <input  name="apelido" 
+                      id="apelido" 
+                      [(ngModel)]="usuario.apelido"
+                      #apelido="ngModel"
+                      class="form-control" 
+                      placeholder="Informe seu apelido" />
+            </div>  
+          </div>
+          <div class="col-3">  
+            <div class="form-group">
+              <label form="dataNascimento">Data de nascimento (*)</label>
+              <input  name="dataNascimento" 
+                      id="dataNascimento" 
+                      [(ngModel)]="usuario.dataNascimentoFormatada"
+                      #dataNascimento="ngModel"
+                      class="form-control"
+                      maxlength="10"
+                      required 
+                      (keyup)="formataData()" />
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label form="estado">Estado (*)</label>
+              <select name="estado" 
+                      [(ngModel)]="usuario.estado" 
+                      #estado="ngModel"
+                      class="form-control"
+                      required>
+                <option *ngFor="let estado of estados" value="{{estado.chave}}">{{estado.valor}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">  
+            <div class="form-group">
+              <label form="cidade">Cidade</label>
+              <input  name="cidade" 
+                      id="cidade" 
+                      [(ngModel)]="usuario.cidade"
+                      #cidade="ngModel"
+                      class="form-control" 
+                      placeholder="Informe sua cidade"
+                      minlength="5" required />
+            </div>  
+          </div>
+          <div class="col-3">  
+            <div class="form-group">
+              <label form="ondeJoga">Local onde joga</label>
+              <input  name="ondeJoga" 
+                      id="ondeJoga" 
+                      [(ngModel)]="usuario.ondeJoga"
+                      #ondeJoga="ngModel"
+                      class="form-control" />
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2">  
+            <div class="form-group">
+              <label form="sexo">Sexo (*)</label>
+              <select name="sexo" 
+                      [(ngModel)]="usuario.sexo" 
+                      #sexo="ngModel"
+                      class="form-control"
+                      required>
+                  <option *ngFor="let sexo of sexos" value="{{sexo.chave}}">{{sexo.valor}}</option>
+              </select>
+            </div>  
+          </div>
+          <div class="col-2">  
+            <div class="form-group">
+              <label form="tipo">Tipo</label>
+              <select name="tipo" 
+                      [(ngModel)]="usuario.tipo" 
+                      #tipo="ngModel"
+                      class="form-control">
+                  <option *ngFor="let tipo of tipos" value="{{tipo.chave}}">{{tipo.valor}}</option>
+              </select>
+            </div>  
+          </div>
+          <div class="col-2">  
+            <div class="form-group">
+              <label form="nivel">Nível</label>
+              <select name="nivel" 
+                      [(ngModel)]="usuario.nivel" 
+                      #nivel="ngModel"
+                      class="form-control">
+                  <option *ngFor="let nivel of niveis" value="{{nivel.chave}}">{{nivel.valor}}</option>
+              </select>
+            </div>  
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <input 
+              type="submit"
+              (click)="salvar()"
+              value="Salvar"
+              [disabled]="!formUsuarios.form.valid"
+              class="btn btn-primary"
+              style="width: 150px;">
+
+            &nbsp;
+            <button 
+              type="button" 
+              data-toggle="modal" 
+              data-target="#modalNovaSenha"
+              class="btn btn-secondary"
+              style="width: 150px;">Atualizar senha</button>
+
+            &nbsp;
+            <button 
+              type="button" 
+              onclick="window.history.back(-1)"
+              class="btn btn-secondary"
+              style="width: 150px;">Voltar</button>
+
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        &nbsp;
+      </div>
+      <div class="row">
+        &nbsp;
+      </div>
       
-      <div class="col-12"> 
-          
-        <!-- conteúdo da página -->
-        <form #formUsuarios="ngForm" novalidate>
-
-          <h4>DADOS CADASTRAIS</h4>
-
-          <app-mensagens [mensagem]="mensagem"></app-mensagens>
-
-          <div class="row">
-            <div class="col-4">
-              <div class="form-group">
-                <label form="email">Email (*)</label>
-                <input  name="email" 
-                        id="email" 
-                        disabled="true"
-                        [(ngModel)]="usuario.email"
-                        #email="ngModel"
-                        class="form-control" />
+      <!-- modal -->
+      <div class="row">
+        <div class="col-12">
+          <div id="modalNovaSenha" class="modal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    Atualização de senha.
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-5">
+                      <input type="password"
+                            name="senha"
+                            [(ngModel)]="userPassDTO.senha" 
+                            class="form-control"
+                            placeholder="Senha"
+                            minlength="3" 
+                            required /><br />
+                    </div>
+                    <div class="col-5">
+                      <input type="password"
+                            name="novaSenha"
+                            [(ngModel)]="userPassDTO.novaSenha" 
+                            class="form-control"
+                            placeholder="Nova senha"
+                            minlength="3" 
+                            required />
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-10">
+                      <input type="password"
+                            name="confirmacaoNovaSenha"
+                            [(ngModel)]="userPassDTO.confirmacaoNovaSenha" 
+                            class="form-control"
+                            placeholder="Confirme a nova senha"
+                            minlength="3" 
+                            required />
+                    </div>
+                  </div>
+                  <br />
+                  <app-mensagens [mensagem]="mensagemModal"></app-mensagens>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" 
+                          class="btn btn-primary" 
+                          (click)="atualizaSenha()">
+                          Atualizar senha
+                  </button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-4">
-              <div class="form-group">
-                <label form="nome">Nome (*)</label>
-                <input  name="nome" 
-                        id="nome" 
-                        [(ngModel)]="usuario.nome"
-                        #nome="ngModel"
-                        class="form-control" 
-                        placeholder="Informe seu nome"
-                        required />
-              </div>
-            </div>
-            <div class="col-4">  
-              <div class="form-group">
-                <label form="apelido">Apelido</label>
-                <input  name="apelido" 
-                        id="apelido" 
-                        [(ngModel)]="usuario.apelido"
-                        #apelido="ngModel"
-                        class="form-control" 
-                        placeholder="Informe seu apelido" />
-              </div>  
-            </div>
-            <div class="col-3">  
-              <div class="form-group">
-                <label form="dataNascimento">Data de nascimento (*)</label>
-                <input  name="dataNascimento" 
-                        id="dataNascimento" 
-                        [(ngModel)]="usuario.dataNascimentoFormatada"
-                        #dataNascimento="ngModel"
-                        class="form-control"
-                        maxlength="10"
-                        required 
-                        (keyup)="formataData()" />
-              </div>  
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-4">
-              <div class="form-group">
-                <label form="estado">Estado (*)</label>
-                <select name="estado" 
-                        [(ngModel)]="usuario.estado" 
-                        #estado="ngModel"
-                        class="form-control"
-                        required>
-                  <option *ngFor="let estado of estados" value="{{estado.chave}}">{{estado.valor}}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-4">  
-              <div class="form-group">
-                <label form="cidade">Cidade</label>
-                <input  name="cidade" 
-                        id="cidade" 
-                        [(ngModel)]="usuario.cidade"
-                        #cidade="ngModel"
-                        class="form-control" 
-                        placeholder="Informe sua cidade"
-                        minlength="5" required />
-              </div>  
-            </div>
-            <div class="col-3">  
-              <div class="form-group">
-                <label form="ondeJoga">Local onde joga</label>
-                <input  name="ondeJoga" 
-                        id="ondeJoga" 
-                        [(ngModel)]="usuario.ondeJoga"
-                        #ondeJoga="ngModel"
-                        class="form-control" />
-              </div>  
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-2">  
-              <div class="form-group">
-                <label form="sexo">Sexo (*)</label>
-                <select name="sexo" 
-                        [(ngModel)]="usuario.sexo" 
-                        #sexo="ngModel"
-                        class="form-control"
-                        required>
-                    <option *ngFor="let sexo of sexos" value="{{sexo.chave}}">{{sexo.valor}}</option>
-                </select>
-              </div>  
-            </div>
-            <div class="col-2">  
-              <div class="form-group">
-                <label form="tipo">Tipo</label>
-                <select name="tipo" 
-                        [(ngModel)]="usuario.tipo" 
-                        #tipo="ngModel"
-                        class="form-control">
-                    <option *ngFor="let tipo of tipos" value="{{tipo.chave}}">{{tipo.valor}}</option>
-                </select>
-              </div>  
-            </div>
-            <div class="col-2">  
-              <div class="form-group">
-                <label form="nivel">Nível</label>
-                <select name="nivel" 
-                        [(ngModel)]="usuario.nivel" 
-                        #nivel="ngModel"
-                        class="form-control">
-                    <option *ngFor="let nivel of niveis" value="{{nivel.chave}}">{{nivel.valor}}</option>
-                </select>
-              </div>  
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-12">
-              <input 
-                type="submit"
-                (click)="salvar()"
-                value="Salvar"
-                [disabled]="!formUsuarios.form.valid"
-                class="btn btn-primary"
-                style="width: 150px;">
-
-              &nbsp;
-              <button 
-                type="button" 
-                onclick="window.history.back(-1)"
-                class="btn btn-secondary"
-                style="width: 150px;">Voltar</button>
-            </div>
-          </div>
-        </form>
-        <div class="row">
-          &nbsp;
         </div>
-        <div class="row">
-          &nbsp;
-        </div>
-        <!-- fim do conteúdo -->
-  
-      </div>
-  
+      </div> 
+      <!-- fim do conteúdo -->
+
     </div>
-    <footer class="sticky-footer">
-      <div class="container">
-        <div class="text-center">
-          <small>Copyright TopSpin 2019</small>
-        </div>
-      </div>
-    </footer>
   </div>
+  <footer class="sticky-footer">
+    <div class="container">
+      <div class="text-center">
+        <small>Copyright TopSpin 2019</small>
+      </div>
+    </div>
+  </footer>
+</div>

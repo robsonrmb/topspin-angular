@@ -13,6 +13,8 @@ export class Usuario {
 		public nivel?: string,
 		public email?: string,
 		public amigo?: boolean,
-		public dataNascimentoFormatada?: string) {}
+		public dataNascimentoFormatada?: string,
+		public senha?: string,
+		public confirmationSenha?: string) {}
 
 }

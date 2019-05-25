@@ -6,6 +6,7 @@ import { UsuarioService } from '../../../services';
 import { ESTADOS, NIVEIS, TIPOSCD, MensagemEnum, SEXOS } from '../../../constantes';
 import { Util } from 'src/app/topspin/utils/util';
 import { UtilLog } from 'src/app/topspin/utils/utilLog';
+import { UserPassDTO } from 'src/app/topspin/models/dto/userpass.dto';
 
 @Component({
   selector: 'app-usuario',
@@ -17,11 +18,13 @@ export class CadastroUsuarioComponent implements OnInit {
   @ViewChild('formUsuarios') formUsuarios: NgForm;
 
   usuario: Usuario;
+  userPassDTO: UserPassDTO = new UserPassDTO();
   estados: ChaveValor[];
   tipos: ChaveValor[];
   niveis: ChaveValor[];
   sexos: ChaveValor[];
   mensagem: Mensagem = new Mensagem();
+  mensagemModal: Mensagem = new Mensagem();
 
   constructor(private usuarioService: UsuarioService) { }
 
@@ -38,6 +41,7 @@ export class CadastroUsuarioComponent implements OnInit {
     this.tipos = TIPOSCD;
     this.sexos = SEXOS;
     this.mensagem = new Mensagem();
+    this.mensagemModal = new Mensagem();
   }
 
   salvar() {
@@ -52,6 +56,50 @@ export class CadastroUsuarioComponent implements OnInit {
             UtilLog.imprimeLogConsole(true, error);
           }
         );
+  }
+
+  atualizaSenha() {
+    this.userPassDTO.email = this.usuario.email;
+    console.log(this.userPassDTO);
+    let msgValidation: string = this.senhaNaoInformada();
+    if (msgValidation != '') {
+      this.mensagemModal = new Mensagem(MensagemEnum.E, msgValidation);
+
+    }else{
+      msgValidation = this.confirmacaoDaSenhaIncorreta();
+      if (msgValidation != '') {
+        this.mensagemModal = new Mensagem(MensagemEnum.E, msgValidation);
+
+      }else{
+        this.usuarioService.atualizaSenha(this.userPassDTO)
+            .subscribe(
+              (result) => {
+                this.mensagemModal = new Mensagem(MensagemEnum.S, 'Senha alterada com sucesso!!!');
+              },
+              (error: ExceptionTS) => {
+                this.mensagemModal = new Mensagem(MensagemEnum.E, UtilLog.buscaMensagemDoErro(error));
+                UtilLog.imprimeLogConsole(true, error);
+              }
+            );
+      }
+    }
+  }
+
+  senhaNaoInformada(): string {
+    if (this.userPassDTO.senha == undefined || this.userPassDTO.senha == '' || 
+        this.userPassDTO.novaSenha == undefined || this.userPassDTO.novaSenha == '' || 
+        this.userPassDTO.confirmacaoNovaSenha == undefined || this.userPassDTO.confirmacaoNovaSenha == '') {
+      
+      return 'Campos senha e confirmação de senha são obrigatórios.';
+    }
+    return '';
+  }
+
+  confirmacaoDaSenhaIncorreta(): string {
+    if (this.userPassDTO.novaSenha != this.userPassDTO.confirmacaoNovaSenha) {
+      return 'Campos senha e confirmação de senha devem ser iguais.';
+    }
+    return '';
   }
 
   formataData() {

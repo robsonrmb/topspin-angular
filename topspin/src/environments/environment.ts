@@ -13,7 +13,8 @@ export const environment = {
     jogos: 'http://localhost:8080/jogos',
     avaliacoes: 'http://localhost:8080/avaliacoes',
     estatisticas: 'http://localhost:8080/estatisticas',
-    area_avaliacoes: 'http://localhost:8080/area-avaliacoes'
+    area_avaliacoes: 'http://localhost:8080/area-avaliacoes',
+    autenticacao: 'http://localhost:8080/auth'
   },
   firebase: {
     apiKey: 'AIzaSyAFMvgAHhkwtfHCRTypNv03pJIu9aqXgAU',
