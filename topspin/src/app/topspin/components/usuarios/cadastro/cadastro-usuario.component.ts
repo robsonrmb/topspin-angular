@@ -121,4 +121,35 @@ export class CadastroUsuarioComponent implements OnInit {
     return dataF;
   }
 
+  possuiFoto(): boolean {
+    if (this.usuario.nomeFoto == undefined || this.usuario.nomeFoto == "") {
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  getFotoUsuario() {
+    return `https://s3-sa-east-1.amazonaws.com/topspin-backend/${this.usuario.nomeFoto}`;
+  }
+
+  inputFileChange(event) {
+    if (event.target.files && event.target.files[0]) {
+      const foto = event.target.files[0];
+      const formData = new FormData();
+      formData.append('file', foto);
+
+      this.usuarioService.alteraFoto(this.usuario, formData)
+        .subscribe(
+          (result) => {
+            this.mensagem = new Mensagem(MensagemEnum.S, 'Fotografia do usuário alterada com sucesso!!!');
+          },
+          (error: ExceptionTS) => {
+            this.mensagem = new Mensagem(MensagemEnum.E, UtilLog.buscaMensagemDoErro(error));
+            UtilLog.imprimeLogConsole(true, error);
+          }
+        );
+    }
+  }
+
 }

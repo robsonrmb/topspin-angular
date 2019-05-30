@@ -22,7 +22,15 @@
         <div class="row">
           <div class="col-4">
             <div class="form-group">
-              <label form="email">Email (*)</label>
+              <img [src]="getFotoUsuario()" width="100px" height="150px" *ngIf="possuiFoto()" />
+              <img src="https://s3-sa-east-1.amazonaws.com/topspin-backend/semFoto.png" width="100px" height="150px"  *ngIf="!possuiFoto()" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label form="email">Email (*)</label> 
               <input  name="email" 
                       id="email" 
                       disabled="true"
@@ -163,6 +171,14 @@
             &nbsp;
             <button 
               type="button" 
+              data-toggle="modal" 
+              data-target="#modalFoto"
+              class="btn btn-secondary"
+              style="width: 150px;">Atualizar foto</button>
+
+            &nbsp;
+            <button 
+              type="button" 
               onclick="window.history.back(-1)"
               class="btn btn-secondary"
               style="width: 150px;">Voltar</button>
@@ -177,7 +193,7 @@
         &nbsp;
       </div>
       
-      <!-- modal -->
+      <!-- modal nova senha -->
       <div class="row">
         <div class="col-12">
           <div id="modalNovaSenha" class="modal">
@@ -239,6 +255,46 @@
           </div>
         </div>
       </div> 
+
+      <!-- modal foto -->
+      <div class="row">
+        <div class="col-12">
+          <div id="modalFoto" class="modal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">
+                    Atualização fotografia de perfil.
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="row">
+                    <div class="col-5">
+                      <input type="file"
+                             (change)="inputFileChange($event)" /><br />
+                    </div>
+                  </div>
+                  <br />
+                  <app-mensagens [mensagem]="mensagemModal"></app-mensagens>
+                </div>
+                <div class="modal-footer">
+                  <!--
+                  <button type="button" 
+                          class="btn btn-primary" 
+                          (click)="atualizaFoto()">
+                          Atualizar fotografia
+                  </button>
+                  -->
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- fim do conteúdo -->
 
     </div>

@@ -15,6 +15,7 @@ export class Usuario {
 		public amigo?: boolean,
 		public dataNascimentoFormatada?: string,
 		public senha?: string,
-		public confirmationSenha?: string) {}
+		public confirmationSenha?: string,
+		public nomeFoto?: string) {}
 
 }

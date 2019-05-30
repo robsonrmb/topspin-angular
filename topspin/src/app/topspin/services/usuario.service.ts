@@ -63,6 +63,12 @@ export class UsuarioService {
                     .catch(error => throwError(error));
   }
 
+  alteraFoto(usuario: Usuario, formData: FormData): Observable<boolean> {
+    let headers = new HttpHeaders();
+    return this.http.post<boolean>(`${environment.recurso_url.usuarios}/${usuario.id}/foto`, formData)
+                    .catch(error => throwError(error));
+  }
+
   atualizaSenha(userPassDTO: UserPassDTO): Observable<boolean> {
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', window.sessionStorage.getItem(CONSTANTE_TOKEN))
