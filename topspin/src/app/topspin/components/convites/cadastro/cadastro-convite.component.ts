@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Convite, ChaveValor, Usuario, Mensagem, ExceptionTS } from '../../../models';
-import { PERIODOS, MensagemEnum } from '../../../constantes';
+import { PERIODOS, MensagemEnum, CONSTANTE_AMAZONS3 } from '../../../constantes';
 import { ConviteService, UsuarioService } from '../../../services';
 import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
@@ -76,6 +76,22 @@ export class CadastroConviteComponent implements OnInit {
                 data.substring(3,5) + '-' +
                 data.substring(0,2);
     return dataF;
+  }
+  
+  possuiFoto(): boolean {
+    if (this.convidado.nomeFoto == undefined || this.convidado.nomeFoto == "") {
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  getFotoUsuario() {
+    return `${CONSTANTE_AMAZONS3}${this.convidado.nomeFoto}`;
+  }
+  
+  getSemFotoUsuario() {
+    return `${CONSTANTE_AMAZONS3}semFoto.png`;
   }
 
 }

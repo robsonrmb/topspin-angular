@@ -21,7 +21,12 @@
         
         <div class="row">
           <div class="col-12 bg-light">
-              <h5>Adversário: {{convidado.nome}}</h5>
+              <h5>
+                Adversário: 
+                <img [src]="getFotoUsuario()" width="30px" height="40px" *ngIf="possuiFoto()" />
+                <img [src]="getSemFotoUsuario()" width="30px" height="40px"  *ngIf="!possuiFoto()" />
+                {{convidado.nome}}
+            </h5>
           </div>
         </div>
         <div class="row">

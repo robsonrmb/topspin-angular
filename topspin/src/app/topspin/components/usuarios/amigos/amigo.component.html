@@ -27,11 +27,16 @@
               <thead class="thead-light">
               <tr>
                 <th>Nome</th>
+                <th></th>
                 <th>Apelido</th>
                 <th>Ação</th>
               </tr>
               </thead>
               <tr *ngFor="let usu of listaDeAmigos">
+                <td>
+                    <img [src]="getFotoUsuario(usu)" width="30px" height="40px" *ngIf="possuiFoto(usu)" />
+                    <img [src]="getSemFotoUsuario()" width="30px" height="40px"  *ngIf="!possuiFoto(usu)" />
+                </td>
                 <td>{{usu.nome}}</td>
                 <td>{{usu.apelido}}</td>
                 <td>

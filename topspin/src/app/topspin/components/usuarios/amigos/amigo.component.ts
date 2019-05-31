@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Usuario, FormUsuarioAmigo, Mensagem, ExceptionTS } from '../../../models';
 import { AmigoService, UsuarioService } from '../../../services';
 import { Router } from '@angular/router';
-import { MensagemEnum } from 'src/app/topspin/constantes';
+import { MensagemEnum, CONSTANTE_AMAZONS3 } from 'src/app/topspin/constantes';
 import { UtilLog } from 'src/app/topspin/utils/utilLog';
 
 @Component({
@@ -86,4 +86,19 @@ export class AmigoComponent implements OnInit {
     this.router.navigate(['/pesqEstatisticas', u.id]);
   }
 
+  possuiFoto(us: Usuario): boolean {
+    if (us.nomeFoto == undefined || us.nomeFoto == "") {
+      return false;
+    }else{
+      return true;
+    }
+  }
+
+  getFotoUsuario(us: Usuario) {
+    return `${CONSTANTE_AMAZONS3}${us.nomeFoto}`;
+  }
+  
+  getSemFotoUsuario() {
+    return `${CONSTANTE_AMAZONS3}semFoto.png`;
+  }
 }

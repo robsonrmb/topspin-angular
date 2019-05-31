@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 
 import { Usuario, ChaveValor, Mensagem, ExceptionTS } from '../../../models';
 import { UsuarioService } from '../../../services';
-import { ESTADOS, NIVEIS, TIPOSCD, MensagemEnum, SEXOS } from '../../../constantes';
+import { ESTADOS, NIVEIS, TIPOSCD, MensagemEnum, SEXOS, CONSTANTE_AMAZONS3 } from '../../../constantes';
 import { Util } from 'src/app/topspin/utils/util';
 import { UtilLog } from 'src/app/topspin/utils/utilLog';
 import { UserPassDTO } from 'src/app/topspin/models/dto/userpass.dto';
@@ -130,7 +130,11 @@ export class CadastroUsuarioComponent implements OnInit {
   }
 
   getFotoUsuario() {
-    return `https://s3-sa-east-1.amazonaws.com/topspin-backend/${this.usuario.nomeFoto}`;
+    return `${CONSTANTE_AMAZONS3}${this.usuario.nomeFoto}`;
+  }
+
+  getSemFotoUsuario() {
+    return `${CONSTANTE_AMAZONS3}semFoto.png`;
   }
 
   inputFileChange(event) {
